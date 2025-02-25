@@ -43,14 +43,17 @@ public class User {
     }
 
     public long getTid() {
+
         return tid;
     }
 
     public void setTid(long tid) {
+
         this.tid = tid;
     }
 
     public String getFirst_name() {
+
         return first_name;
     }
 
