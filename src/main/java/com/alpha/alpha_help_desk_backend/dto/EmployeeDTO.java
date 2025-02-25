@@ -8,8 +8,7 @@ public class EmployeeDTO {
     private String Area_Of_residence;
     private long National_ID;
     private Boolean status;
-    Date_created - timestamp
-    Date_updated - timestamp
+
 
 
 }
