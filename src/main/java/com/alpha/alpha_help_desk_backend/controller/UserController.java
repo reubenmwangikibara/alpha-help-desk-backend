@@ -1,8 +1,8 @@
-package com.alpha.alpha_help_desk_backend.Controller;
+package com.alpha.alpha_help_desk_backend.controller;
 
-import com.alpha.alpha_help_desk_backend.DTO.UserDTO;
-import com.alpha.alpha_help_desk_backend.Entity.User;
-import com.alpha.alpha_help_desk_backend.Service.UserService;
+import com.alpha.alpha_help_desk_backend.dto.UserDTO;
+import com.alpha.alpha_help_desk_backend.entity.User;
+import com.alpha.alpha_help_desk_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

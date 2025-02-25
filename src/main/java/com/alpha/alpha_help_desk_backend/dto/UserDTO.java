@@ -1,4 +1,4 @@
-package com.alpha.alpha_help_desk_backend.DTO;
+package com.alpha.alpha_help_desk_backend.dto;
 
 public class UserDTO {
     private long tid;

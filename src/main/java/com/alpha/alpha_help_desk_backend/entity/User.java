@@ -1,4 +1,4 @@
-package com.alpha.alpha_help_desk_backend.Entity;
+package com.alpha.alpha_help_desk_backend.entity;
 
 import jakarta.persistence.*;
 

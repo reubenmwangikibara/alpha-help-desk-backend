@@ -1,8 +1,8 @@
-package com.alpha.alpha_help_desk_backend.Service;
+package com.alpha.alpha_help_desk_backend.service;
 
-import com.alpha.alpha_help_desk_backend.DTO.UserDTO;
-import com.alpha.alpha_help_desk_backend.Entity.User;
-import com.alpha.alpha_help_desk_backend.Repository.UserRepository;
+import com.alpha.alpha_help_desk_backend.dto.UserDTO;
+import com.alpha.alpha_help_desk_backend.entity.User;
+import com.alpha.alpha_help_desk_backend.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
