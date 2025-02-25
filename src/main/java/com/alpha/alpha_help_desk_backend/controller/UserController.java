@@ -3,6 +3,9 @@ package com.alpha.alpha_help_desk_backend.controller;
 import com.alpha.alpha_help_desk_backend.dto.UserDTO;
 import com.alpha.alpha_help_desk_backend.entity.User;
 import com.alpha.alpha_help_desk_backend.service.UserService;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path= "api/v1/users")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final  UserService userService;
     @PostMapping
 
     public User addNewUser (@RequestBody UserDTO userDTO){
