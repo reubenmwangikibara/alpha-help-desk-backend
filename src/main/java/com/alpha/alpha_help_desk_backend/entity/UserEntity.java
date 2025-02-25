@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User  implements Serializable {
+public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for auto-increment
     @Column(name = "tid", nullable = false)
@@ -19,7 +19,7 @@ public class User  implements Serializable {
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "Last_name")
-    private String LastName;
+    private String lastName;
     @Column(name = "Username")
     private String userName;
     @Column(name = "Password")
@@ -29,7 +29,7 @@ public class User  implements Serializable {
     @Column(name = "Role")
     private String role;
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
 
 }

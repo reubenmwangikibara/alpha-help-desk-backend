@@ -12,12 +12,12 @@ import java.io.Serializable;
 public class UserDTO implements Serializable {
 
     private long tid;
-    private String first_name;
-    private String Last_name;
-    private String Username;
-    private String Password;
-    private long Phone_number;
-    private String Role;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String password;
+    private long phoneNumber;
+    private String role;
     private Boolean status ;
 
 
