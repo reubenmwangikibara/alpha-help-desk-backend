@@ -12,8 +12,7 @@ import java.io.Serializable;
 public class EmployeeDTO implements Serializable {
     private long tid;
     private long user_id;
-    private long employee;
-    private long Status;
+    private long employee_Number;
     private String Area_Of_residence;
     private long National_ID;
     private Boolean status;

@@ -21,10 +21,10 @@ public class EmployeeEntity implements Serializable {
     @Column(name="user_id")
     private long user_id;
     @Column(name="employee_number")
-    private long employee_Number;
+    private long employeeNumber;
     @Column(name="status")
     private Integer Status;
-    @Column(name="Area_Of_residence")
+    @Column(name="areofresidence")
     private String Area_Of_residence;
     @Column(name="National_ID")
     private long National_ID;
