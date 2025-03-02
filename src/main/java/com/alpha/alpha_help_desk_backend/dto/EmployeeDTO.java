@@ -12,9 +12,9 @@ import java.io.Serializable;
 public class EmployeeDTO implements Serializable {
     private long tid;
     private long user_id;
-    private long employee_Number;
+    private long employeenumber;
     private String Area_Of_residence;
-    private long National_ID;
+    private long national_id;
     private Boolean status;
 
 

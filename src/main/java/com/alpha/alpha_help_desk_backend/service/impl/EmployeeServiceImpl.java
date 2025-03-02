@@ -15,17 +15,18 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeDBUtilService employeeDBUtilService;
     public EmployeeEntity addEmployeeDetails (EmployeeDTO employeeDTO) throws Exception {
-        var employeeEntity = employeeDBUtilService.getEmployeeByEmployeeNumber(employeeDTO.getEmployee_Number());
+        //var
+        EmployeeEntity employeeEntity = employeeDBUtilService.getEmployeeByEmployeeNumber(employeeDTO.getEmployeenumber());
         if (employeeEntity != null) {
             throw new Exception("Employee already exists");
         }
 
         var employee = EmployeeEntity.builder()
                 .Status(1)
-                .employeeNumber(employeeDTO.getEmployee_Number())
-                .National_ID(employeeDTO.getNational_ID())
+                .employeenumber(employeeDTO.getEmployeenumber())
+                .employeenumber(employeeDTO.getNational_id())
                 .Area_Of_residence(employeeDTO.getArea_Of_residence())
-                .employeeNumber(employeeDTO.getEmployee_Number())
+                .employeenumber(employeeDTO.getEmployeenumber())
                 .build();
         log.info("We are about to save employee details {}",new Gson().toJson(employee));
         var savedEmployee = employeeDBUtilService.saveEmployeeDetails(employee);
