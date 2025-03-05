@@ -5,12 +5,14 @@ import com.alpha.alpha_help_desk_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserDbUtilService {
     private final UserRepository userRepository;
 
-    public UserEntity getUserByUsername(String username) {
+    public Optional<UserEntity> getUserByUsername(String username) {
 
         return userRepository.findUserEntitiesByUserName(username);
     }
