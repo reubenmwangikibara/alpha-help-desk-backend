@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class EmployeeDBUtilService {
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeEntity getEmployeeByEmployeeNumber(Long employeenumber) {
+    public EmployeeEntity getEmployeeByEmployeeNumber(Long employeeNumber) {
 
-        return employeeRepository.findEmployeeByEmployeeNumber(employeenumber);
+        return employeeRepository.findEmployeeByEmployeeNumber(employeeNumber);
 
     }
     public EmployeeEntity saveEmployeeDetails(EmployeeEntity employee) {

@@ -16,17 +16,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeDBUtilService employeeDBUtilService;
     public EmployeeEntity addEmployeeDetails (EmployeeDTO employeeDTO) throws Exception {
         //var
-        EmployeeEntity employeeEntity = employeeDBUtilService.getEmployeeByEmployeeNumber(employeeDTO.getEmployeenumber());
-        if (employeeEntity != null) {
-            throw new Exception("Employee already exists");
-        }
+        EmployeeEntity employeeEntity = employeeDBUtilService.getEmployeeByEmployeeNumber(employeeDTO.getEmployeeNumber());
+
+//        if (employeeEntity != null) {
+//          throw new Exception("Employee already exists");
+//        }
 
         var employee = EmployeeEntity.builder()
                 .Status(1)
-                .employeenumber(employeeDTO.getEmployeenumber())
-                .employeenumber(employeeDTO.getNational_id())
+                .employeeNumber(employeeDTO.getEmployeeNumber())
+                .employeeNumber(employeeDTO.getNational_id())
                 .Area_Of_residence(employeeDTO.getArea_Of_residence())
-                .employeenumber(employeeDTO.getEmployeenumber())
+                .employeeNumber(employeeDTO.getEmployeeNumber())
                 .build();
         log.info("We are about to save employee details {}",new Gson().toJson(employee));
         var savedEmployee = employeeDBUtilService.saveEmployeeDetails(employee);

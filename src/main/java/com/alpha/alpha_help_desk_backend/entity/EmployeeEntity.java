@@ -21,7 +21,7 @@ public class EmployeeEntity implements Serializable {
     @Column(name="user_id")
     private long user_id;
     @Column(name="employee_number")
-    private long employeenumber;
+    private long employeeNumber;
     @Column(name="status")
     private Integer Status;
     @Column(name="areofresidence")
