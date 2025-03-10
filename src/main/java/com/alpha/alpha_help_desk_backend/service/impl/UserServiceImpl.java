@@ -2,6 +2,7 @@ package com.alpha.alpha_help_desk_backend.service.impl;
 
 import com.alpha.alpha_help_desk_backend.dto.UserDTO;
 import com.alpha.alpha_help_desk_backend.entity.UserEntity;
+import com.alpha.alpha_help_desk_backend.service.UserService;
 import com.alpha.alpha_help_desk_backend.utils.db.UserDbUtilService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.alpha.alpha_help_desk_backend.controller;
 
 import com.alpha.alpha_help_desk_backend.dto.EmployeeDTO;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
-import com.alpha.alpha_help_desk_backend.service.impl.EmployeeService;
+import com.alpha.alpha_help_desk_backend.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
