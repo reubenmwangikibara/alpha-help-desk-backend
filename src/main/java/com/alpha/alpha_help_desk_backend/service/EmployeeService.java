@@ -1,5 +1,12 @@
 package com.alpha.alpha_help_desk_backend.service;
 
-public class EmployeeService {
+import com.alpha.alpha_help_desk_backend.dto.EmployeeDTO;
+import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
 
+
+
+
+
+public interface EmployeeService {
+    EmployeeEntity addEmployeeDetails (EmployeeDTO employeeDTO) throws Exception;
 }

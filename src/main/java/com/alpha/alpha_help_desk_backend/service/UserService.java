@@ -10,6 +10,7 @@ import java.util.Map;
 public interface UserService {
 
     UserEntity addNewUser (UserDTO userDTO) throws Exception;
+
     AuthResponseDto userLogin (LoginDTO loginDTO) throws Exception;
 
 }
