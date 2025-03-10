@@ -18,6 +18,5 @@ public class EmployeeController {
     public EmployeeEntity addEmployeeDetails (@RequestBody EmployeeDTO employeeDTO) throws Exception{
 
         return employeeService.addEmployeeDetails(employeeDTO);
-
     }
 }

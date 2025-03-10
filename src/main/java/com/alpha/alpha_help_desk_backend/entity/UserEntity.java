@@ -25,7 +25,7 @@ public class UserEntity implements Serializable {
     @Column(name = "Password")
     private String password;
     @Column(name = "Phone_number")
-    private long phoneNumber;
+    private String phoneNumber;
     @Column(name = "Role")
     private String role;
     @Column(name = "status")

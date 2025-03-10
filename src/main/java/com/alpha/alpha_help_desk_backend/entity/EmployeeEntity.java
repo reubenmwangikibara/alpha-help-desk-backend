@@ -19,15 +19,15 @@ public class EmployeeEntity implements Serializable {
     @Column(name = "tid", nullable = false)
     private long tid;
     @Column(name="user_id")
-    private long user_id;
+    private long userID;
     @Column(name="employee_number")
     private long employeeNumber;
     @Column(name="status")
-    private Integer Status;
-    @Column(name="areofresidence")
-    private String Area_Of_residence;
+    private Integer status;
+    @Column(name="residence")
+    private String areaOfResidence;
     @Column(name="national_id")
-    private long national_id;
+    private long nationalID;
 
 
 }

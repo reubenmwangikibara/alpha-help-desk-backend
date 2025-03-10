@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
         //check if the user exist
         var userEntity = userDbUtilService.getUserByUsername(userDTO.getUserName());
         if (userEntity != null) {
-            throw new Exception("user already exists");
+            throw new Exception("user already exists "+userDTO.getUserName());
         }
         var user = UserEntity.builder()
                 .status(1)
