@@ -5,6 +5,7 @@ import com.alpha.alpha_help_desk_backend.dto.response.AuthResponseDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -12,19 +13,17 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "TheBestFamillyEver@12!TheBestFamillyEver@12!TheBestFamillyEver@12!TheBestFamillyEver@12!"; // Change this to a secure key
     private static final long EXPIRATION_TIME = 3600; // 1 hour
     private final ApplicationConfigs applicationConfigs;
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return Keys.hmacShaKeyFor(applicationConfigs.getSecretKey().getBytes());
     }
 
     // ✅ Generate JWT Token
@@ -49,11 +48,15 @@ public class JwtUtil {
                 .compact();
 
         // Return token and expiry time
-        return  AuthResponseDto.builder()
+        var tokenResponse=  AuthResponseDto.builder()
                 .token(token)
                 .duration(String.valueOf(applicationConfigs.getExpiryDuration()))
                 .expiresAt(formattedExpiry)
                 .build();
+        log.info("generated token: {}", token);
+        var uname = extractUsername(token);
+        log.info("is token valid? {}", validateToken(token,uname));
+        return tokenResponse;
     }
 
     // ✅ Extract Username from JWT

@@ -4,6 +4,7 @@ import com.alpha.alpha_help_desk_backend.dto.LoginDTO;
 import com.alpha.alpha_help_desk_backend.dto.UserDTO;
 import com.alpha.alpha_help_desk_backend.dto.response.AuthResponseDto;
 import com.alpha.alpha_help_desk_backend.entity.UserEntity;
+import com.alpha.alpha_help_desk_backend.exceptions.UserExistException;
 import com.alpha.alpha_help_desk_backend.security.JwtUtil;
 import com.alpha.alpha_help_desk_backend.service.UserService;
 import com.alpha.alpha_help_desk_backend.utils.db.UserDbUtilService;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
         //check if the user exist
         var userEntity = userDbUtilService.getUserByUsername(userDTO.getUserName());
         if (userEntity.isPresent()) {
-            throw new Exception("user already exists");
+            throw new UserExistException("user already exists");
         }
         var user = UserEntity.builder()
                 .status(1)
