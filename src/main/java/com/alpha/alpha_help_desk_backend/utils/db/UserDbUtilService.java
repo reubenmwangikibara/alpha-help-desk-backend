@@ -16,6 +16,10 @@ public class UserDbUtilService {
 
         return userRepository.findUserEntitiesByUserName(username);
     }
+    public Optional<UserEntity> checkIfUserExist(String username,String phoneNumber) {
+
+        return userRepository.findUserEntitiesByUserNameOrPhoneNumber(username, phoneNumber);
+    }
     public UserEntity saveUserDetails(UserEntity user) {
 
         return userRepository.save(user);

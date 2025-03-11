@@ -36,6 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .role("USER")
                 .build();
         var createdUser = userService.addNewUser(userDetails);
+
         System.out.println("user created: " + new Gson().toJson(createdUser));
 
 
@@ -46,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .areaOfResidence(employeeDTO.getAreaOfResidence())
                 .userID(createdUser.getTid())
                 .build();
+
         log.info("We are about to save employee details {}",new Gson().toJson(employee));
         var savedEmployee = employeeDBUtilService.saveEmployeeDetails(employee);
         log.info("employee details saved Successfully");
