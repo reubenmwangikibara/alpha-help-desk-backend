@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
         if (userEntity.isPresent()) {
             throw new UserExistException("user already exists");
         }
-        log.info("No User found with username {} and msisdn {}", userDTO.getUserName(),userDTO.getPhoneNumber());
         var user = UserEntity.builder()
                 .status(1)
                 .firstName(userDTO.getFirstName())

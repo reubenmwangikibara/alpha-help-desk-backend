@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserExistException.class)
     public ResponseEntity<Object> handleUserExistException(UserExistException ex, WebRequest request) {
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("error", ex.getMessage());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.OK);
