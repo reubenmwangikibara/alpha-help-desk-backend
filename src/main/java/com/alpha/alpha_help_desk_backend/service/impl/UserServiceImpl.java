@@ -1,7 +1,7 @@
 package com.alpha.alpha_help_desk_backend.service.impl;
 
-import com.alpha.alpha_help_desk_backend.dto.LoginDTO;
-import com.alpha.alpha_help_desk_backend.dto.UserDTO;
+import com.alpha.alpha_help_desk_backend.dto.request.LoginDTO;
+import com.alpha.alpha_help_desk_backend.dto.request.UserDTO;
 import com.alpha.alpha_help_desk_backend.dto.response.AuthResponseDto;
 import com.alpha.alpha_help_desk_backend.entity.UserEntity;
 import com.alpha.alpha_help_desk_backend.exceptions.UserExistException;
@@ -9,8 +9,6 @@ import com.alpha.alpha_help_desk_backend.security.JwtUtil;
 import com.alpha.alpha_help_desk_backend.service.UserService;
 import com.alpha.alpha_help_desk_backend.utils.db.UserDbUtilService;
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Slf4j

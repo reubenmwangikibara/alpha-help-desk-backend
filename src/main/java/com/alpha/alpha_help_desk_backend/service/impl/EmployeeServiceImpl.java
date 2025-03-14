@@ -1,14 +1,12 @@
 package com.alpha.alpha_help_desk_backend.service.impl;
 
-import com.alpha.alpha_help_desk_backend.dto.EmployeeDTO;
-import com.alpha.alpha_help_desk_backend.dto.UserDTO;
+import com.alpha.alpha_help_desk_backend.dto.request.EmployeeDTO;
+import com.alpha.alpha_help_desk_backend.dto.request.UserDTO;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
-import com.alpha.alpha_help_desk_backend.entity.UserEntity;
 import com.alpha.alpha_help_desk_backend.service.EmployeeService;
 import com.alpha.alpha_help_desk_backend.service.UserService;
 import com.alpha.alpha_help_desk_backend.utils.UtilService;
 import com.alpha.alpha_help_desk_backend.utils.db.EmployeeDBUtilService;
-import com.alpha.alpha_help_desk_backend.utils.db.UserDbUtilService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -48,9 +48,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("User Details: " + new Gson().toJson(userDetails.getUsername()));
 
                 if (validateToken(jwt, userDetails.getUsername())) {
+                    System.out.println("Token Validated");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    System.out.println("Authentication Successful");
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 } else {
                     System.out.println("INVALID JWT TOKEN " + new Gson().toJson(userDetails));

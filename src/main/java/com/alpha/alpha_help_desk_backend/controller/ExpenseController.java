@@ -1,7 +1,6 @@
 package com.alpha.alpha_help_desk_backend.controller;
 
-import com.alpha.alpha_help_desk_backend.dto.UserDTO;
-import com.alpha.alpha_help_desk_backend.entity.UserEntity;
+import com.alpha.alpha_help_desk_backend.dto.request.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

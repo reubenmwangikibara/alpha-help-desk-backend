@@ -1,4 +1,4 @@
-package com.alpha.alpha_help_desk_backend.dto;
+package com.alpha.alpha_help_desk_backend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.alpha.alpha_help_desk_backend.controller;
 
-import com.alpha.alpha_help_desk_backend.dto.EmployeeDTO;
+import com.alpha.alpha_help_desk_backend.dto.request.EmployeeDTO;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
 import com.alpha.alpha_help_desk_backend.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
