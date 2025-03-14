@@ -30,8 +30,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity addNewUser (UserDTO userDTO) throws Exception {
         //check if the user exist
-        var userEntity = userDbUtilService.checkIfUserExist(userDTO.getUserName(), userDTO.getPhoneNumber());
+        var userEntity = userDbUtilService. checkIfUserExist(userDTO.getUserName(), userDTO.getPhoneNumber());
+        log.info("userEntity: {}", userEntity.isPresent());
         if (userEntity.isPresent()) {
+            log.info("user already exist");
             throw new UserExistException("user already exists");
         }
         var user = UserEntity.builder()
