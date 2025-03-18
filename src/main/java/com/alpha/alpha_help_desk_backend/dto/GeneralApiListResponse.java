@@ -17,7 +17,7 @@ public class GeneralApiListResponse extends  BaseApiResponse {
     public GeneralApiListResponse() {
     }
 
-    public GeneralApiListResponse(List<?> data, Long total, Integer status, String message) {
+    public GeneralApiListResponse( Integer status, String message,List<?> data, Long total) {
         this.data = data;
         this.total = total;
         this.status = status;

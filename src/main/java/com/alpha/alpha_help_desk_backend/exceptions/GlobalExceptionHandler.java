@@ -99,4 +99,11 @@ public class GlobalExceptionHandler {
         return new BaseApiResponse(null,400,error,null);
     }
 
+    @ExceptionHandler(InvoiceDetailsExistException.class)
+    public BaseApiResponse handleInvoiceExistException(InvoiceDetailsExistException e){
+        String error = e.getMessage();
+        log.info(error);
+        return new BaseApiResponse(null,400,error,null);
+    }
+
 }

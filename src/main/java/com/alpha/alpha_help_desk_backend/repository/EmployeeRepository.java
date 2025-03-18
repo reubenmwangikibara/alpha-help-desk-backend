@@ -9,7 +9,10 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository <EmployeeEntity,Long> {
     EmployeeEntity findByUserID (Long userID);
+
+
     Optional<EmployeeEntity> findEmployeeEntitiesByTid (Long employeeID);
+
 
 
 

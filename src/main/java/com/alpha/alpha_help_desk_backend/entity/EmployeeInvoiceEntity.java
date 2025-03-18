@@ -21,9 +21,6 @@ public class EmployeeInvoiceEntity {
     @Column(name = "tid", nullable = false)
     private long tid;
 
-    @Column(name = "employee_id", nullable = false)
-    private  Integer employeeId;
-
     @Column(name = "rate", nullable = false)
     private  double rate;
 
@@ -72,7 +69,11 @@ public class EmployeeInvoiceEntity {
     @Column(name = "actualSalary", nullable = false)
     private Double actualSalary;
 
-//    @Column(name = "status", nullable = false)
-//    private Integer status;
+    @Column(name = "status", nullable = false)
+    private Integer status;
+
+    @ManyToOne(fetch = FetchType.LAZY) // Use LAZY to optimize queries
+    @JoinColumn(name = "employee_id", nullable = false) // Foreign key
+    private EmployeeEntity employeeEntity;
 
 }

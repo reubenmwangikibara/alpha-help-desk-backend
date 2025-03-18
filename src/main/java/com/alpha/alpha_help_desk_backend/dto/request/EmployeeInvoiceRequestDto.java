@@ -17,7 +17,7 @@ import java.util.Date;
 public class EmployeeInvoiceRequestDto implements Serializable {
 
     @NotNull(message = "employeeId.required")
-    private  Integer employeeId;
+    private  Long employeeId;
 
     @NotNull(message = "rate.required")
     private  double rate;
@@ -35,7 +35,7 @@ public class EmployeeInvoiceRequestDto implements Serializable {
     private  double deductions;
 
     @NotNull(message = "weekNo.required")
-    private  double weekNo;
+    private  Integer weekNo;
 
     @NotNull(message = "dateFrom date is required")
     private Date dateFrom;

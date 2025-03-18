@@ -9,14 +9,9 @@ import java.util.List;
 @Component
 public class ResponseService {
 
-    public BaseApiResponse buildSuccessApiResponseDto(List<?> response, int count) {
+    public BaseApiResponse buildSuccessApiResponseDto(List<?> response, long count) {
 
-       return GeneralApiListResponse
-                .builder()
-               .data(response)
-               .message("Success")
-               .status(200)
-               .build();
+       return new  GeneralApiListResponse(200,"success",response,count);
     }
 
 }

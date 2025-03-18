@@ -4,6 +4,7 @@ import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.request.EmployeeInvoiceRequestDto;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeInvoiceEntity;
 import com.alpha.alpha_help_desk_backend.exceptions.EmployeeNotFoundException;
+import com.alpha.alpha_help_desk_backend.exceptions.InvoiceDetailsExistException;
 import com.alpha.alpha_help_desk_backend.service.EmployeeInvoiceService;
 import com.alpha.alpha_help_desk_backend.utils.ResponseService;
 import com.alpha.alpha_help_desk_backend.utils.UtilService;
@@ -31,7 +32,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
     public BaseApiResponse addEmployeeInvoice(EmployeeInvoiceRequestDto employeeInvoiceRequestDto) throws Exception {
 
         //let's check if the employee exist
-        var employeeDetails = employeeDBUtilService.getEmployeeByEmployeeEmployeeID(Long.valueOf(employeeInvoiceRequestDto.getEmployeeId()));
+        var employeeDetails = employeeDBUtilService.getEmployeeByEmployeeEmployeeID(employeeInvoiceRequestDto.getEmployeeId());
 
         if(employeeDetails.isEmpty())
         {
@@ -41,6 +42,13 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         //adding employee invoice details
         var salary = employeeInvoiceRequestDto.getHoursWorked() * employeeInvoiceRequestDto.getRate();
 
+        //check if the employee record for the same week and month exists
+
+        var invoiceExist = employeeDBUtilService.getEmployeeByEmployInvoiceDetails(employeeInvoiceRequestDto.getEmployeeId(),employeeInvoiceRequestDto.getWeekNo(),employeeInvoiceRequestDto.getMonth());
+        if(!invoiceExist.isEmpty())
+        {
+            throw new InvoiceDetailsExistException("Invoice already exists");
+        }
         var usdExpectedSalary = salary - employeeInvoiceRequestDto.getSecurityDeposit() + employeeInvoiceRequestDto.getBonusAmt() + employeeInvoiceRequestDto.getTrainingAmt();
         log.info("USD EXPECTED SALARY: {}", usdExpectedSalary);
         var actualSalary = usdExpectedSalary*employeeInvoiceRequestDto.getForexRate();
@@ -50,8 +58,8 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         log.info("Expected Salary {} ,Actual Salary {} final Salary {}",usdExpectedSalary, actualSalary,finalSalary);
         var invoiceDetails = EmployeeInvoiceEntity
                 .builder()
-                .employeeId((int) empDetails.getTid())
-                .weekNo((int) employeeInvoiceRequestDto.getWeekNo())
+                .employeeEntity(empDetails)
+                .weekNo(Math.toIntExact(employeeInvoiceRequestDto.getWeekNo()))
                 .dateFrom(employeeInvoiceRequestDto.getDateFrom())
                 .dateTo(employeeInvoiceRequestDto.getDateTo())
                 .hoursWorked(employeeInvoiceRequestDto.getHoursWorked())
@@ -66,7 +74,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
                 .forexRate(employeeInvoiceRequestDto.getForexRate())
                 .month(employeeInvoiceRequestDto.getMonth())
                 .usdExpectedSalary(usdExpectedSalary)
-//                .status(0)
+                .status(0)
                 .build();
 
         var savedInvoice = employeeDBUtilService.saveEmployeeInvoiceDetails(invoiceDetails);
