@@ -1,5 +1,6 @@
 package com.alpha.alpha_help_desk_backend.controller;
 
+import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.request.EmployeeDTO;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
 import com.alpha.alpha_help_desk_backend.service.EmployeeService;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
     private final EmployeeService employeeService;
     @PostMapping("/add")
-    public EmployeeEntity addEmployeeDetails (@RequestBody EmployeeDTO employeeDTO) throws Exception{
+    public BaseApiResponse addEmployeeDetails (@RequestBody EmployeeDTO employeeDTO) throws Exception{
 
         return employeeService.addEmployeeDetails(employeeDTO);
     }

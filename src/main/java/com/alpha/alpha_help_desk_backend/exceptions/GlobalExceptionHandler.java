@@ -4,6 +4,7 @@ import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.FieldErrorDto;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
+            log.info(ex.getMessage());
 
             errors.add(new FieldErrorDto(fieldName, errorMessage));
         });
@@ -49,6 +51,8 @@ public class GlobalExceptionHandler {
     public BaseApiResponse handleMissingParams(MissingServletRequestParameterException ex) {
         String fieldName = ex.getParameterName();
         List<FieldErrorDto> errors = new ArrayList<>();
+        log.info(ex.getMessage());
+
         errors.add(new FieldErrorDto(fieldName, "Missing field "+fieldName));
         return new BaseApiResponse(null,400,"Bad Request",errors);
 
@@ -57,6 +61,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({ MethodArgumentTypeMismatchException.class })
     public BaseApiResponse handleMethodArgumentTypeMismatch(
             MethodArgumentTypeMismatchException ex, WebRequest request) {
+        log.info(ex.getMessage());
 
         String errorMessage = ex.getName() + " should be of type " + Objects.requireNonNull(ex.getRequiredType()).getSimpleName();
         List<FieldErrorDto> errors = new ArrayList<>();
@@ -67,20 +72,30 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({HttpMessageNotReadableException.class})
     protected BaseApiResponse handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpStatus status, WebRequest request) {
         String error = "Invalid Request Body. Malformed JSON";
+        log.info(error);
+
         return new BaseApiResponse(null,400,error,null);
     }
-
 
     @ExceptionHandler(JsonMappingException.class)
     public BaseApiResponse handleJsonMappingException(JsonMappingException e){
         String error = "Invalid Request Body. Malformed JSON";
+        log.info(error);
+
         return new BaseApiResponse(null,400,error,null);
     }
-
 
     @ExceptionHandler(UserExistException.class)
     public BaseApiResponse handleJsonMappingException(UserExistException e){
         String error = e.getMessage();
+        log.info(error);
+        return new BaseApiResponse(null,400,error,null);
+    }
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public BaseApiResponse handleJsonMappingException(EmployeeNotFoundException e){
+        String error = e.getMessage();
+        log.info(error);
         return new BaseApiResponse(null,400,error,null);
     }
 

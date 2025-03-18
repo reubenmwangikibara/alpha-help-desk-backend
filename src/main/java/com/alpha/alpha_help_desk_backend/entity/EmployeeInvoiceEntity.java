@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Entity
-@Table(name="employee_payment")
+@Table(name="employee_invoice")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeePaymentEntity {
+public class EmployeeInvoiceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for auto-increment
@@ -40,7 +40,10 @@ public class EmployeePaymentEntity {
     private  double deductions;
 
     @Column(name = "week_no", nullable = false)
-    private  double weekNo;
+    private  Integer weekNo;
+
+    @Column(name = "month", nullable = false)
+    private  String month;
 
     @Column(name = "date_from", nullable = false)
     private Date dateFrom;
@@ -54,7 +57,22 @@ public class EmployeePaymentEntity {
     @Column(name = "hours_worked", nullable = false)
     private Double hoursWorked;
 
-    @Column(name = "status", nullable = false)
-    private Integer status;
+    @Column(name = "advance", nullable = false)
+    private Double advance;
+
+    @Column(name = "salary", nullable = false)
+    private Double salary;
+
+    @Column(name = "expected_salary_usd", nullable = false)
+    private Double usdExpectedSalary;
+
+    @Column(name = "expectedSalary", nullable = false)
+    private Double expectedSalary;
+
+    @Column(name = "actualSalary", nullable = false)
+    private Double actualSalary;
+
+//    @Column(name = "status", nullable = false)
+//    private Integer status;
 
 }
