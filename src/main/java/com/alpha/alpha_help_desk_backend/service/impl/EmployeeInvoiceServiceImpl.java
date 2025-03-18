@@ -2,6 +2,7 @@ package com.alpha.alpha_help_desk_backend.service.impl;
 
 import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.request.EmployeeInvoiceRequestDto;
+import com.alpha.alpha_help_desk_backend.dto.response.EmployeeInvoiceResponseDTO;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeInvoiceEntity;
 import com.alpha.alpha_help_desk_backend.exceptions.EmployeeNotFoundException;
 import com.alpha.alpha_help_desk_backend.exceptions.InvoiceDetailsExistException;
@@ -13,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -56,12 +60,16 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         log.info("Salary {} security deposit {} bonus amt {} training amt  {} ",salary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt());
 
         log.info("Expected Salary {} ,Actual Salary {} final Salary {}",usdExpectedSalary, actualSalary,finalSalary);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fromDate = (employeeInvoiceRequestDto.getDateFrom() != null) ? LocalDate.parse((CharSequence) employeeInvoiceRequestDto.getDateFrom(), formatter) : null;
+        LocalDate toDate = (employeeInvoiceRequestDto.getDateTo() != null) ? LocalDate.parse((CharSequence) employeeInvoiceRequestDto.getDateTo(), formatter) : null;
+
         var invoiceDetails = EmployeeInvoiceEntity
                 .builder()
                 .employeeEntity(empDetails)
                 .weekNo(Math.toIntExact(employeeInvoiceRequestDto.getWeekNo()))
-                .dateFrom(employeeInvoiceRequestDto.getDateFrom())
-                .dateTo(employeeInvoiceRequestDto.getDateTo())
+                .dateFrom(fromDate)
+                .dateTo(toDate)
                 .hoursWorked(employeeInvoiceRequestDto.getHoursWorked())
                 .rate(employeeInvoiceRequestDto.getRate())
                 .salary(salary)
@@ -73,13 +81,37 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
                 .actualSalary(UtilService.round(actualSalary,2))
                 .forexRate(employeeInvoiceRequestDto.getForexRate())
                 .month(employeeInvoiceRequestDto.getMonth())
-                .usdExpectedSalary(usdExpectedSalary)
+                .usdExpectedSalary(UtilService.round(usdExpectedSalary,2))
                 .status(0)
                 .build();
 
+
         var savedInvoice = employeeDBUtilService.saveEmployeeInvoiceDetails(invoiceDetails);
 
-        return responseService.buildSuccessApiResponseDto(List.of(savedInvoice),1);
+        var finalInvoiceDetails = Optional.ofNullable(savedInvoice)
+                .map(EmployeeInvoiceResponseDTO::new)
+                .orElse(null);  // Handle potential null values
 
+        return responseService.buildSuccessApiResponseDto(List.of(finalInvoiceDetails),1);
+
+    }
+
+    /**
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public BaseApiResponse fetchEmployeeInvoice(Long employeeId,Integer status,String month,String dateFrom,String dateTo ) throws Exception {
+        // Convert String to LocalDate
+        log.info("Fetching employee invoice for employee id {}",employeeId);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fromDate = (dateFrom != null) ? LocalDate.parse(dateFrom, formatter) : null;
+        LocalDate toDate = (dateTo != null) ? LocalDate.parse(dateTo, formatter) : null;
+        var invoices = employeeDBUtilService.fetchInvoices(null,null,null,null,null);
+        log.info("Fetched employee invoices {}",invoices);
+
+        var finalInvoiceDetails = invoices.stream().map(EmployeeInvoiceResponseDTO::new).toList();
+
+        return responseService.buildSuccessApiResponseDto(finalInvoiceDetails,1);
     }
 }

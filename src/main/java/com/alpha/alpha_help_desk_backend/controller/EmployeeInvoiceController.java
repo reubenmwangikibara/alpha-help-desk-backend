@@ -5,10 +5,7 @@ import com.alpha.alpha_help_desk_backend.dto.request.EmployeeInvoiceRequestDto;
 import com.alpha.alpha_help_desk_backend.service.EmployeeInvoiceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path= "api/v1/employee-invoice")
@@ -20,5 +17,12 @@ public class EmployeeInvoiceController {
     public BaseApiResponse addEmployeeInvoice (@RequestBody @Valid EmployeeInvoiceRequestDto employeeInvoiceRequestDto) throws Exception {
 
         return employeeInvoiceService.addEmployeeInvoice(employeeInvoiceRequestDto);
+    }
+
+    @GetMapping("/fetch")
+    public BaseApiResponse fetchEmployeeInvoice (
+    ) throws Exception {
+
+        return employeeInvoiceService.fetchEmployeeInvoice(null,0,"feb","2025-03-01","2025-03-01");
     }
 }

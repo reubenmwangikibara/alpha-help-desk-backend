@@ -37,11 +37,11 @@ public class EmployeeInvoiceRequestDto implements Serializable {
     @NotNull(message = "weekNo.required")
     private  Integer weekNo;
 
-    @NotNull(message = "dateFrom date is required")
-    private Date dateFrom;
+    @NotBlank(message = "dateFrom date is required")
+    private String dateFrom;
 
-    @NotNull(message = "dateTo date is required")
-    private Date dateTo;
+    @NotBlank(message = "dateTo date is required")
+    private String dateTo;
 
     @NotNull(message = "forexRate.required")
     private Double forexRate;

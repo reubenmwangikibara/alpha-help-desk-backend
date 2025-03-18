@@ -1,11 +1,14 @@
 package com.alpha.alpha_help_desk_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -43,10 +46,10 @@ public class EmployeeInvoiceEntity {
     private  String month;
 
     @Column(name = "date_from", nullable = false)
-    private Date dateFrom;
+    private LocalDate dateFrom;
 
     @Column(name = "date_to", nullable = false)
-    private Date dateTo;
+    private LocalDate dateTo;
 
     @Column(name = "forex_rate", nullable = false)
     private Double forexRate;

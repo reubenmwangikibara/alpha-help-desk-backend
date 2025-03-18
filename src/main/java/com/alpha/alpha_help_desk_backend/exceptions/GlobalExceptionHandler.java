@@ -79,7 +79,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(JsonMappingException.class)
     public BaseApiResponse handleJsonMappingException(JsonMappingException e){
-        String error = "Invalid Request Body. Malformed JSON";
+
+        String error = e.getMessage();
         log.info(error);
 
         return new BaseApiResponse(null,400,error,null);

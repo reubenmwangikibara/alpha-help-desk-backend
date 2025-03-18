@@ -7,6 +7,7 @@ import com.alpha.alpha_help_desk_backend.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,12 @@ public class EmployeeDBUtilService {
     public List<EmployeeInvoiceEntity> getEmployeeByEmployInvoiceDetails(Long employeeID, Integer weekNo, String month) {
 
         return employeeInvoiceRepository.findEmployInvoiceEntity(employeeID,weekNo,month);
+
+    }
+
+    public List<EmployeeInvoiceEntity> fetchInvoices(Long employeeId, Integer status, String month, Date dateFrom, Date dateTo) {
+
+        return employeeInvoiceRepository.fetchInvoices(employeeId, status, month, dateFrom, dateTo);
 
     }
 
