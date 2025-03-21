@@ -92,6 +92,8 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
                 .map(EmployeeInvoiceResponseDTO::new)
                 .orElse(null);  // Handle potential null values
 
+        assert finalInvoiceDetails != null;
+
         return responseService.buildSuccessApiResponseDto(List.of(finalInvoiceDetails),1);
 
     }
