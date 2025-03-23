@@ -106,18 +106,30 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
      * @throws Exception
      */
     @Override
-    public BaseApiResponse fetchEmployeeInvoice(Long employeeId,Integer status,String month,String dateFrom,String dateTo ) throws Exception {
+    public BaseApiResponse fetchEmployeeInvoice(Long invoiceID,Long employeeID,Integer status,String month,String dateFrom,String dateTo ) throws Exception {
         // Convert String to LocalDate
-        log.info("Fetching employee invoice for employee id {}",employeeId);
+        log.info("Fetching employee invoice for employee id {} employeeID {} status {} month {} date from {} date to {}",invoiceID,employeeID,status,month,dateFrom,dateTo);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fromDate = (dateFrom != null) ? LocalDate.parse(dateFrom, formatter) : null;
-        LocalDate toDate = (dateTo != null) ? LocalDate.parse(dateTo, formatter) : null;
-        var invoices = employeeDBUtilService.fetchInvoices(null,null,null,null,null);
+        LocalDate finalFromDate = (dateFrom != null) ? LocalDate.parse(dateFrom, formatter) : null;
+        LocalDate finalToDate = (dateTo != null) ? LocalDate.parse(dateTo, formatter) : null;
+        var invoices = employeeDBUtilService.fetchInvoices(invoiceID,employeeID,status,month,finalFromDate,finalToDate);
         log.info("Fetched employee invoices {}",invoices);
 
         var finalInvoiceDetails = invoices.stream().map(EmployeeInvoiceResponseDTO::new).toList();
 
-        return responseService.buildSuccessApiResponseDto(finalInvoiceDetails,1);
+        return responseService.buildSuccessApiResponseDto(finalInvoiceDetails, finalInvoiceDetails.size());
+    }
+
+    /**
+     * @param invoiceID
+     * @param employeeID
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public BaseApiResponse fetchEmployeeInvoiceByID(Long invoiceID, Long employeeID) throws Exception {
+        log.info("Fetching employee invoice for employee id {} invoice ID {}",employeeID,invoiceID);
+        return null;
     }
 
     /**

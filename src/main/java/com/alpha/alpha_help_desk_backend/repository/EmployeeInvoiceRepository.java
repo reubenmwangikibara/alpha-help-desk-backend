@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,17 +28,19 @@ public interface EmployeeInvoiceRepository extends JpaRepository<EmployeeInvoice
     List<EmployeeInvoiceEntity> findEmployInvoiceEntity(@Param("employeeId") Long employeeId, @Param("weekNo") Integer weekNo, @Param("month") String month);
 
     @Query("SELECT e FROM EmployeeInvoiceEntity e " +
-            "WHERE (:employeeId IS NULL OR e.employeeEntity.id = :employeeId) " +
+            "WHERE (:invoiceId IS NULL OR e.id = :invoiceId) " +
+            "AND (:employeeId IS NULL OR e.employeeEntity.id = :employeeId) " +
             "AND (:status IS NULL OR e.status = :status) " +
             "AND (:month IS NULL OR e.month LIKE %:month%) " +
             "AND (:dateFrom IS NULL OR e.dateFrom >= :dateFrom) " +
             "AND (:dateTo IS NULL OR e.dateTo <= :dateTo)")
     List<EmployeeInvoiceEntity> fetchInvoices(
+            @Param("invoiceId") Long invoiceID,
             @Param("employeeId") Long employeeId,
             @Param("status") Integer status,
             @Param("month") String month,
-            @Param("dateFrom") Date dateFrom,
-            @Param("dateTo") Date dateTo
+            @Param("dateFrom") LocalDate dateFrom,
+            @Param("dateTo") LocalDate dateTo
     );
 
 }

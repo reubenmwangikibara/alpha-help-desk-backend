@@ -21,9 +21,24 @@ public class EmployeeInvoiceController {
 
     @GetMapping("/fetch")
     public BaseApiResponse fetchEmployeeInvoice (
+            @RequestParam(required = false) Long invoiceID,
+            @RequestParam(required = false) Long employeeId,
+            @RequestParam(required = false) Integer status,
+            @RequestParam(required = false) String month,
+            @RequestParam(required = false) String dateFrom, // String input
+            @RequestParam(required = false) String dateTo   // String input
     ) throws Exception {
 
-        return employeeInvoiceService.fetchEmployeeInvoice(null,0,"feb","2025-03-01","2025-03-01");
+        return employeeInvoiceService.fetchEmployeeInvoice(invoiceID,employeeId,status,month,dateFrom,dateTo);
+    }
+    @GetMapping("fetch/single")
+    public BaseApiResponse fetchInvoiceByID (
+            @RequestParam(required = false) Long employeeID,
+            @RequestParam(required = false) Long tid
+
+    )throws Exception {
+
+        return employeeInvoiceService.fetchEmployeeInvoiceByID(tid,employeeID);
     }
     @PutMapping("update/{tid}")
     public BaseApiResponse updateEmployeeInvoice (@PathVariable Long tid,@RequestBody @Valid EmployeeInvoiceRequestDto employeeInvoiceRequestDto)throws Exception {
