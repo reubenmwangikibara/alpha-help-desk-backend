@@ -18,6 +18,10 @@ public interface EmployeeInvoiceRepository extends JpaRepository<EmployeeInvoice
     List<EmployeeInvoiceEntity> findByEmployeeId(@Param("employeeId") Long employeeId);
 
 
+    @Query("SELECT e FROM EmployeeInvoiceEntity e WHERE e.tid = :tid")
+    Optional<EmployeeInvoiceEntity> findById(@Param("tid") Long tid);
+
+
 
     @Query("SELECT e FROM EmployeeInvoiceEntity e WHERE e.employeeEntity.id = :employeeId AND e.weekNo = :weekNo AND e.month =:month")
     List<EmployeeInvoiceEntity> findEmployInvoiceEntity(@Param("employeeId") Long employeeId, @Param("weekNo") Integer weekNo, @Param("month") String month);

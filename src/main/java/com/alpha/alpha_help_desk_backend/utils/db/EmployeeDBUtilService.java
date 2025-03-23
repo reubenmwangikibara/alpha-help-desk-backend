@@ -5,6 +5,7 @@ import com.alpha.alpha_help_desk_backend.entity.EmployeeInvoiceEntity;
 import com.alpha.alpha_help_desk_backend.repository.EmployeeInvoiceRepository;
 import com.alpha.alpha_help_desk_backend.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmployeeDBUtilService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeInvoiceRepository employeeInvoiceRepository;
@@ -42,6 +44,12 @@ public class EmployeeDBUtilService {
     public List<EmployeeInvoiceEntity> fetchInvoices(Long employeeId, Integer status, String month, Date dateFrom, Date dateTo) {
 
         return employeeInvoiceRepository.fetchInvoices(employeeId, status, month, dateFrom, dateTo);
+
+    }
+
+    public Optional<EmployeeInvoiceEntity> fetchInvoiceByID(Long invoiceID) {
+        log.info("Fetching employee invoice by ID {}", invoiceID);
+        return employeeInvoiceRepository.findById(invoiceID);
 
     }
 

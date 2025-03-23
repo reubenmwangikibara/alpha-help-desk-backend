@@ -10,8 +10,10 @@ import com.alpha.alpha_help_desk_backend.service.EmployeeInvoiceService;
 import com.alpha.alpha_help_desk_backend.utils.ResponseService;
 import com.alpha.alpha_help_desk_backend.utils.UtilService;
 import com.alpha.alpha_help_desk_backend.utils.db.EmployeeDBUtilService;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +28,7 @@ import java.util.Optional;
 public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
     private final EmployeeDBUtilService employeeDBUtilService;
     private final ResponseService responseService;
+    private final ModelMapper modelMapper;
 
     /**
      * @param employeeInvoiceRequestDto
@@ -115,5 +118,33 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         var finalInvoiceDetails = invoices.stream().map(EmployeeInvoiceResponseDTO::new).toList();
 
         return responseService.buildSuccessApiResponseDto(finalInvoiceDetails,1);
+    }
+
+    /**
+     * @param invoiceID
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public BaseApiResponse updateEmployeeInvoice(Long invoiceID, EmployeeInvoiceRequestDto employeeInvoiceRequestDto) throws Exception {
+        log.info("Updating employee invoice for employee id {}",invoiceID);
+        //let get the employee details
+        var optionalInvoice = employeeDBUtilService.fetchInvoiceByID(invoiceID);
+        if (optionalInvoice.isEmpty()) {
+            throw new Exception("Employee invoice with id " + invoiceID + " does not exist");
+        }
+        EmployeeInvoiceEntity existingInvoice = optionalInvoice.get();
+
+        // Map DTO fields to existing entity (ignoring null values)
+         modelMapper.map(employeeInvoiceRequestDto, existingInvoice);
+        // Save the updated entity
+        var updatedRecord = employeeDBUtilService.saveEmployeeInvoiceDetails(existingInvoice);
+        log.info("Update Employee Invoice {}",updatedRecord);
+        var finalInvoiceDetails = Optional.ofNullable(updatedRecord)
+                .map(EmployeeInvoiceResponseDTO::new)
+                .orElse(null);
+
+        assert finalInvoiceDetails != null;
+        return responseService.buildSuccessApiResponseDto(List.of(finalInvoiceDetails),1);
     }
 }

@@ -3,33 +3,34 @@ package com.alpha.alpha_help_desk_backend.exceptions;
 import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.FieldErrorDto;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.server.MethodNotAllowedException;
 
-import java.security.SignatureException;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    Map<String, Object> body = new HashMap<>();
+
+
+    @ExceptionHandler(Exception.class)
+    public BaseApiResponse handleException(Exception ex) {
+        String error = ex.getMessage();
+        log.info(error);
+        return new BaseApiResponse(null,400,error,null);
+
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -57,6 +58,15 @@ public class GlobalExceptionHandler {
         return new BaseApiResponse(null,400,"Bad Request",errors);
 
     }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public BaseApiResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+        String error = ex.getLocalizedMessage();
+        log.info(error);
+        return new BaseApiResponse(null,400,error,null);
+
+    }
+
 
     @ExceptionHandler({ MethodArgumentTypeMismatchException.class })
     public BaseApiResponse handleMethodArgumentTypeMismatch(

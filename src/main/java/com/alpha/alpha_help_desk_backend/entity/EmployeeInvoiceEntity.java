@@ -1,6 +1,7 @@
 package com.alpha.alpha_help_desk_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -45,9 +46,11 @@ public class EmployeeInvoiceEntity {
     @Column(name = "month", nullable = false)
     private  String month;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "date_from", nullable = false)
     private LocalDate dateFrom;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "date_to", nullable = false)
     private LocalDate dateTo;
 

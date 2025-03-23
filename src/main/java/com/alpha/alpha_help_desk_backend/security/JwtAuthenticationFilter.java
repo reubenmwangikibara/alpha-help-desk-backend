@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,7 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserService userService;
@@ -45,14 +47,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             username = extractUsername(jwt);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userService.loadUserByUsername(username);
-                System.out.println("User Details: " + new Gson().toJson(userDetails.getUsername()));
 
                 if (validateToken(jwt, userDetails.getUsername())) {
-                    System.out.println("Token Validated");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    System.out.println("Authentication Successful");
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 } else {
                     System.out.println("INVALID JWT TOKEN " + new Gson().toJson(userDetails));
@@ -73,7 +72,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (IllegalArgumentException e) {
             sendErrorResponse(response, "JWT claims string is empty.", HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
-            sendErrorResponse(response, "Invalid token.", HttpServletResponse.SC_UNAUTHORIZED);
+            log.error(e.getMessage());
+            sendErrorResponse(response, "An error Occurred While Processing Your Request", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

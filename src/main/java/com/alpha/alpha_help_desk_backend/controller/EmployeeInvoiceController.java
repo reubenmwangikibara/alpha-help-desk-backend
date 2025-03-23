@@ -25,4 +25,9 @@ public class EmployeeInvoiceController {
 
         return employeeInvoiceService.fetchEmployeeInvoice(null,0,"feb","2025-03-01","2025-03-01");
     }
+    @PutMapping("update/{tid}")
+    public BaseApiResponse updateEmployeeInvoice (@PathVariable Long tid,@RequestBody @Valid EmployeeInvoiceRequestDto employeeInvoiceRequestDto)throws Exception {
+
+        return employeeInvoiceService.updateEmployeeInvoice(tid,employeeInvoiceRequestDto);
+    }
 }
