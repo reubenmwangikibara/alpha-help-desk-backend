@@ -27,13 +27,15 @@ public interface EmployeeInvoiceRepository extends JpaRepository<EmployeeInvoice
     @Query("SELECT e FROM EmployeeInvoiceEntity e WHERE e.employeeEntity.id = :employeeId AND e.weekNo = :weekNo AND e.month =:month")
     List<EmployeeInvoiceEntity> findEmployInvoiceEntity(@Param("employeeId") Long employeeId, @Param("weekNo") Integer weekNo, @Param("month") String month);
 
-    @Query("SELECT e FROM EmployeeInvoiceEntity e " +
-            "WHERE (:invoiceId IS NULL OR e.id = :invoiceId) " +
-            "AND (:employeeId IS NULL OR e.employeeEntity.id = :employeeId) " +
-            "AND (:status IS NULL OR e.status = :status) " +
-            "AND (:month IS NULL OR e.month LIKE %:month%) " +
-            "AND (:dateFrom IS NULL OR e.dateFrom >= :dateFrom) " +
-            "AND (:dateTo IS NULL OR e.dateTo <= :dateTo)")
+    @Query(value = "SELECT eie.* FROM employee_invoice eie " +
+            "JOIN employee ee ON ee.tid = eie.employee_id " +
+            "WHERE (CAST(:invoiceId AS BIGINT) IS NULL OR eie.tid = :invoiceId) " +
+            "AND (CAST(:employeeId AS BIGINT) IS NULL OR ee.tid = :employeeId) " +
+            "AND (CAST(:status AS INTEGER) IS NULL OR eie.status = :status) " +
+            "AND (CAST(:month AS TEXT) IS NULL OR eie.month LIKE CONCAT('%', :month, '%')) " +
+            "AND (CAST(:dateFrom AS DATE) IS NULL OR eie.date_from >= :dateFrom) " +
+            "AND (CAST(:dateTo AS DATE) IS NULL OR eie.date_to <= :dateTo)",
+            nativeQuery = true)
     List<EmployeeInvoiceEntity> fetchInvoices(
             @Param("invoiceId") Long invoiceID,
             @Param("employeeId") Long employeeId,

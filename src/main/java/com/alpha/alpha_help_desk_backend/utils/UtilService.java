@@ -3,6 +3,8 @@ package com.alpha.alpha_help_desk_backend.utils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UtilService {
 
@@ -22,5 +24,11 @@ public class UtilService {
         return new BigDecimal(value)
                 .setScale(places, RoundingMode.HALF_UP)
                 .doubleValue();
+    }
+
+    public static LocalDate formatDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return (date!= null) ? LocalDate.parse((CharSequence) date, formatter) : null;
     }
 }

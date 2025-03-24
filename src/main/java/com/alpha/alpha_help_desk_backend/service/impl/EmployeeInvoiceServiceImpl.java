@@ -63,16 +63,13 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         log.info("Salary {} security deposit {} bonus amt {} training amt  {} ",salary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt());
 
         log.info("Expected Salary {} ,Actual Salary {} final Salary {}",usdExpectedSalary, actualSalary,finalSalary);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fromDate = (employeeInvoiceRequestDto.getDateFrom() != null) ? LocalDate.parse((CharSequence) employeeInvoiceRequestDto.getDateFrom(), formatter) : null;
-        LocalDate toDate = (employeeInvoiceRequestDto.getDateTo() != null) ? LocalDate.parse((CharSequence) employeeInvoiceRequestDto.getDateTo(), formatter) : null;
 
         var invoiceDetails = EmployeeInvoiceEntity
                 .builder()
                 .employeeEntity(empDetails)
                 .weekNo(Math.toIntExact(employeeInvoiceRequestDto.getWeekNo()))
-                .dateFrom(fromDate)
-                .dateTo(toDate)
+                .dateFrom(UtilService.formatDate(employeeInvoiceRequestDto.getDateFrom()))
+                .dateTo(UtilService.formatDate(employeeInvoiceRequestDto.getDateTo()))
                 .hoursWorked(employeeInvoiceRequestDto.getHoursWorked())
                 .rate(employeeInvoiceRequestDto.getRate())
                 .salary(salary)
@@ -108,28 +105,17 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
     @Override
     public BaseApiResponse fetchEmployeeInvoice(Long invoiceID,Long employeeID,Integer status,String month,String dateFrom,String dateTo ) throws Exception {
         // Convert String to LocalDate
-        log.info("Fetching employee invoice for employee id {} employeeID {} status {} month {} date from {} date to {}",invoiceID,employeeID,status,month,dateFrom,dateTo);
+        log.info("Fetching employee invoice for invoiceID {} employeeID {} status {} month {} date from {} date to {}",invoiceID,employeeID,status,month,dateFrom,dateTo);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate finalFromDate = (dateFrom != null) ? LocalDate.parse(dateFrom, formatter) : null;
         LocalDate finalToDate = (dateTo != null) ? LocalDate.parse(dateTo, formatter) : null;
-        var invoices = employeeDBUtilService.fetchInvoices(invoiceID,employeeID,status,month,finalFromDate,finalToDate);
+        var finalMonth = month != null ? month.toUpperCase() : null;
+        var invoices = employeeDBUtilService.fetchInvoices(invoiceID,employeeID,status,finalMonth,finalFromDate,finalToDate);
         log.info("Fetched employee invoices {}",invoices);
 
         var finalInvoiceDetails = invoices.stream().map(EmployeeInvoiceResponseDTO::new).toList();
 
         return responseService.buildSuccessApiResponseDto(finalInvoiceDetails, finalInvoiceDetails.size());
-    }
-
-    /**
-     * @param invoiceID
-     * @param employeeID
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public BaseApiResponse fetchEmployeeInvoiceByID(Long invoiceID, Long employeeID) throws Exception {
-        log.info("Fetching employee invoice for employee id {} invoice ID {}",employeeID,invoiceID);
-        return null;
     }
 
     /**
@@ -149,9 +135,11 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
 
         // Map DTO fields to existing entity (ignoring null values)
          modelMapper.map(employeeInvoiceRequestDto, existingInvoice);
+         existingInvoice.setDateFrom(UtilService.formatDate(employeeInvoiceRequestDto.getDateFrom()));
+         existingInvoice.setDateTo(UtilService.formatDate(employeeInvoiceRequestDto.getDateTo()));
         // Save the updated entity
         var updatedRecord = employeeDBUtilService.saveEmployeeInvoiceDetails(existingInvoice);
-        log.info("Update Employee Invoice {}",updatedRecord);
+        log.info("Updated Employee Invoice {}",updatedRecord);
         var finalInvoiceDetails = Optional.ofNullable(updatedRecord)
                 .map(EmployeeInvoiceResponseDTO::new)
                 .orElse(null);

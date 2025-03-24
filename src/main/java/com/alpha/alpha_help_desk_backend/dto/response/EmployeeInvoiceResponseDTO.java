@@ -49,7 +49,7 @@ public class EmployeeInvoiceResponseDTO {
 
         // Prevent Lazy Loading issues
         if (invoice.getEmployeeEntity() != null) {
-            this.employeeID = String.valueOf(invoice.getEmployeeEntity().getEmployeeNumber()); // Only include name
+            this.employeeID = String.valueOf(invoice.getEmployeeEntity().getTid()); // Only include name
         }
     }
 }

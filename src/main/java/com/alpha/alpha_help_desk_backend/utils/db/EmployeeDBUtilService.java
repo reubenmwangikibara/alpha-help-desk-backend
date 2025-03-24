@@ -44,7 +44,6 @@ public class EmployeeDBUtilService {
     }
 
     public List<EmployeeInvoiceEntity> fetchInvoices(Long invoiceID, Long employeeId, Integer status, String month, LocalDate dateFrom, LocalDate dateTo) {
-
         return employeeInvoiceRepository.fetchInvoices(invoiceID,employeeId, status, month, dateFrom, dateTo);
 
     }

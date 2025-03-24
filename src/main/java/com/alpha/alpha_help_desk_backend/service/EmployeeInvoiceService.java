@@ -10,7 +10,6 @@ public interface EmployeeInvoiceService {
 
     BaseApiResponse fetchEmployeeInvoice (Long invoiceID,Long employeeID,Integer status,String month,String dateFrom,String dateTo) throws Exception;
 
-    BaseApiResponse fetchEmployeeInvoiceByID (Long invoiceID,Long employeeID) throws Exception;
 
     BaseApiResponse updateEmployeeInvoice (Long invoiceID, EmployeeInvoiceRequestDto employeeInvoiceRequestDto) throws Exception;
 
