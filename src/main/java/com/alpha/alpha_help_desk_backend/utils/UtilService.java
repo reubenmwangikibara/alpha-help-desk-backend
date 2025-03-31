@@ -1,11 +1,16 @@
 package com.alpha.alpha_help_desk_backend.utils;
 
+import com.alpha.alpha_help_desk_backend.dto.response.SalaryCalc;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+@Component
+@Slf4j
 public class UtilService {
 
     public static  int employeeNumberGenerator()
@@ -30,5 +35,24 @@ public class UtilService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return (date!= null) ? LocalDate.parse((CharSequence) date, formatter) : null;
+    }
+
+    public SalaryCalc salaryCalculator(double salary,double securityDeposit,double bonus,double trainingAmount ,double forexRate,double deductions)
+    {
+        var usdExpectedSalary = usdExpectedSalary(salary,bonus,trainingAmount,securityDeposit);
+        var actualSalary = usdExpectedSalary *forexRate;
+        var finalSalary = actualSalary - deductions;
+        return SalaryCalc.builder()
+                .usdExpectedSalary(usdExpectedSalary)
+                .finalSalary(finalSalary)
+                .actualSalary(actualSalary).build();
+    }
+    private static double usdExpectedSalary(double salary,double bonus,double trainingAmount,double securityDeposit)
+    {
+        log.info("Salary {} security deposit {} bonus amt {} training amt  {} ",salary,securityDeposit,bonus,trainingAmount);
+
+        var usdExpectedSalary = salary - securityDeposit + bonus + trainingAmount;
+        log.info("USD EXPECTED SALARY: {}", usdExpectedSalary);
+        return usdExpectedSalary;
     }
 }

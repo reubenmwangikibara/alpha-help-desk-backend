@@ -48,9 +48,9 @@ public class EmployeeDBUtilService {
 
     }
 
-    public Optional<EmployeeInvoiceEntity> fetchInvoiceByID(Long invoiceID) {
+    public Optional<EmployeeInvoiceEntity> fetchInvoiceByIDAndActiveStatus(Long invoiceID, Integer status) {
         log.info("Fetching employee invoice by ID {}", invoiceID);
-        return employeeInvoiceRepository.findById(invoiceID);
+        return employeeInvoiceRepository.findByIdAndStatus(invoiceID, status);
 
     }
 

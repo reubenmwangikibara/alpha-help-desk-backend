@@ -21,7 +21,6 @@ public class ExpenseController {
 
     @PostMapping("/fetch")
     public BaseApiResponse fetchExpense () throws Exception {
-
         return expenseService.fetchExpense();
     }
 

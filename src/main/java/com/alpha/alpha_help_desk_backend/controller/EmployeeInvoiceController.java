@@ -2,6 +2,7 @@ package com.alpha.alpha_help_desk_backend.controller;
 
 import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.request.EmployeeInvoiceRequestDto;
+import com.alpha.alpha_help_desk_backend.dto.request.InvoicePayment;
 import com.alpha.alpha_help_desk_backend.service.EmployeeInvoiceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,15 @@ public class EmployeeInvoiceController {
     public BaseApiResponse updateEmployeeInvoice (@PathVariable Long tid,@RequestBody @Valid EmployeeInvoiceRequestDto employeeInvoiceRequestDto)throws Exception {
 
         return employeeInvoiceService.updateEmployeeInvoice(tid,employeeInvoiceRequestDto);
+    }
+    @PutMapping("deactivate/{tid}")
+    public BaseApiResponse deactivateInvoice (@PathVariable Long tid,@RequestBody @Valid EmployeeInvoiceRequestDto employeeInvoiceRequestDto)throws Exception {
+
+        return employeeInvoiceService.deactivateInvoice(tid);
+    }
+    @PostMapping("payment")
+    public BaseApiResponse invoicePayment (@RequestBody @Valid InvoicePayment invoicePayment)throws Exception {
+
+        return employeeInvoiceService.invoicePayment(invoicePayment);
     }
 }

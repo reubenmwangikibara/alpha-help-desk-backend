@@ -14,4 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfigs {
     long expiryDuration;
     String secretKey;
+    int activeStatus;
+    int deletedStatus;
+    int paidStatus;
 }

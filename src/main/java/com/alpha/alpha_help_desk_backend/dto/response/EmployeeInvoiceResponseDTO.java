@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Data
 public class EmployeeInvoiceResponseDTO {
     private long tid;
-    private double rate;
+    private double employeeRate;
     private double securityDeposit;
     private double bonusAmt;
     private double trainingAmt;
@@ -23,13 +23,13 @@ public class EmployeeInvoiceResponseDTO {
     private Double salary;
     private Double usdExpectedSalary;
     private Double expectedSalary;
-    private Double actualSalary;
+    private Integer actualSalary;
     private Integer status;
     private String employeeID; // Only include necessary employee fields
 
     public EmployeeInvoiceResponseDTO(EmployeeInvoiceEntity invoice) {
         this.tid = invoice.getTid();
-        this.rate = invoice.getRate();
+        this.employeeRate = invoice.getEmployeeRate();
         this.securityDeposit = invoice.getSecurityDeposit();
         this.bonusAmt = invoice.getBonusAmt();
         this.trainingAmt = invoice.getTrainingAmt();

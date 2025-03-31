@@ -19,8 +19,11 @@ public class EmployeeInvoiceRequestDto implements Serializable {
     @NotNull(message = "employeeId.required")
     private  Long employeeId;
 
-    @NotNull(message = "rate.required")
-    private  double rate;
+    @NotNull(message = "employeeRate.required")
+    private  double employeeRate;
+
+    @NotNull(message = "companyRate.required")
+    private  double companyRate;
 
     @NotNull(message = "securityDeposit.required")
     private  double securityDeposit;
@@ -54,4 +57,9 @@ public class EmployeeInvoiceRequestDto implements Serializable {
 
     @NotNull(message = "month.required")
     private String month;
+
+    @NotNull(message = "deductBonus.required")
+    private Boolean deductBonus ;
+
+
 }
