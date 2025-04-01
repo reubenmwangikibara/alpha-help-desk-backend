@@ -39,7 +39,7 @@ public class EmployeeInvoiceController {
         return employeeInvoiceService.updateEmployeeInvoice(tid,employeeInvoiceRequestDto);
     }
     @PutMapping("deactivate/{tid}")
-    public BaseApiResponse deactivateInvoice (@PathVariable Long tid,@RequestBody @Valid EmployeeInvoiceRequestDto employeeInvoiceRequestDto)throws Exception {
+    public BaseApiResponse deactivateInvoice (@PathVariable Long tid)throws Exception {
 
         return employeeInvoiceService.deactivateInvoice(tid);
     }
