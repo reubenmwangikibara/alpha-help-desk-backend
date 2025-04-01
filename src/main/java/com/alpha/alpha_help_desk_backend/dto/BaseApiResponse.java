@@ -14,10 +14,10 @@ import java.util.List;
 @Data
 @Builder
 public class BaseApiResponse {
-    protected Object data;
     protected int status;
     protected String message;
     protected List<FieldErrorDto> errors = new ArrayList<>();
+    protected Object data;
 
 
 }

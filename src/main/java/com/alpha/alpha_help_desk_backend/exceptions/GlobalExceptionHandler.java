@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     public BaseApiResponse handleException(Exception ex) {
         String error = ex.getMessage();
         log.info(error);
-        return new BaseApiResponse(null,400,error,null);
+        return new BaseApiResponse(400,error,null,null);
 
     }
 
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
 
             errors.add(new FieldErrorDto(fieldName, errorMessage));
         });
-        return new BaseApiResponse(null,400,"Bad Request",errors);
+        return new BaseApiResponse(400,"Bad Request",errors,null);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
         log.info(ex.getMessage());
 
         errors.add(new FieldErrorDto(fieldName, "Missing field "+fieldName));
-        return new BaseApiResponse(null,400,"Bad Request",errors);
+        return new BaseApiResponse(400, ex.getLocalizedMessage(),errors,null);
 
     }
 
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
     public BaseApiResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
         String error = ex.getLocalizedMessage();
         log.info(error);
-        return new BaseApiResponse(null,400,error,null);
+        return new BaseApiResponse(400,error,null,null);
 
     }
 
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
         String errorMessage = ex.getName() + " should be of type " + Objects.requireNonNull(ex.getRequiredType()).getSimpleName();
         List<FieldErrorDto> errors = new ArrayList<>();
         errors.add(new FieldErrorDto(ex.getName(),errorMessage));
-        return new BaseApiResponse(null,400,"Bad Request",errors);
+        return new BaseApiResponse(400,ex.getLocalizedMessage(),errors,errors);
     }
 
     @ExceptionHandler({HttpMessageNotReadableException.class})
@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
         String error = "Invalid Request Body. Malformed JSON";
         log.info(error);
 
-        return new BaseApiResponse(null,400,error,null);
+        return new BaseApiResponse(400,error,null,null);
     }
 
     @ExceptionHandler(JsonMappingException.class)
@@ -93,28 +93,28 @@ public class GlobalExceptionHandler {
         String error = e.getMessage();
         log.info(error);
 
-        return new BaseApiResponse(null,400,error,null);
+        return new BaseApiResponse(400,error,null,null);
     }
 
     @ExceptionHandler(UserExistException.class)
     public BaseApiResponse handleJsonMappingException(UserExistException e){
         String error = e.getMessage();
         log.info(error);
-        return new BaseApiResponse(null,400,error,null);
+        return new BaseApiResponse(400,error,null,null);
     }
 
     @ExceptionHandler(EmployeeNotFoundException.class)
     public BaseApiResponse handleJsonMappingException(EmployeeNotFoundException e){
         String error = e.getMessage();
         log.info(error);
-        return new BaseApiResponse(null,400,error,null);
+        return new BaseApiResponse(400,error,null,null);
     }
 
     @ExceptionHandler(InvoiceDetailsExistException.class)
     public BaseApiResponse handleInvoiceExistException(InvoiceDetailsExistException e){
         String error = e.getMessage();
         log.info(error);
-        return new BaseApiResponse(null,400,error,null);
+        return new BaseApiResponse(400,error,null,null);
     }
 
 }

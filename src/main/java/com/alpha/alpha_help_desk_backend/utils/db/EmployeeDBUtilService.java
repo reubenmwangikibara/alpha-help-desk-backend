@@ -26,6 +26,11 @@ public class EmployeeDBUtilService {
         return employeeRepository.findEmployeeEntitiesByTid(employeeID);
 
     }
+    public List<EmployeeEntity> getActiveEmployees() {
+
+        return employeeRepository.findAllEmployees();
+
+    }
 
     public EmployeeEntity saveEmployeeDetails(EmployeeEntity employee) {
 

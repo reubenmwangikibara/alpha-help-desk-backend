@@ -78,9 +78,16 @@ public class EmployeeInvoiceEntity {
     @Column(name = "actualSalary", nullable = false)
     private Integer actualSalary;
 
+
     @Column(name = "status", nullable = false)
     private Integer status;
 
+
+    @Column(name = "company_gross_salary_usd", nullable = false)
+    private Double companyGrossSalaryUsd;
+
+    @Column(name = "company_gross_salary", nullable = false)
+    private Double companyGrossSalary;
 
     @ManyToOne(fetch = FetchType.LAZY) // Use LAZY to optimize queries
     @JoinColumn(name = "employee_id", nullable = false) // Foreign key

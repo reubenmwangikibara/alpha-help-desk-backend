@@ -4,6 +4,7 @@ import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.request.EmployeeDTO;
 import com.alpha.alpha_help_desk_backend.dto.request.UserDTO;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
+import com.alpha.alpha_help_desk_backend.mapper.EmployeeMapper;
 import com.alpha.alpha_help_desk_backend.service.EmployeeService;
 import com.alpha.alpha_help_desk_backend.service.UserService;
 import com.alpha.alpha_help_desk_backend.utils.ResponseService;
@@ -13,9 +14,11 @@ import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,21 +43,33 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .build();
         var createdUser = userService.addNewUser(userDetails);
 
-        System.out.println("user created: " + new Gson().toJson(createdUser));
-
-
         var employee = EmployeeEntity.builder()
                 .status(1)
                 .employeeNumber(employeeNumber)
                 .nationalID(employeeDTO.getNationalId())
                 .areaOfResidence(employeeDTO.getAreaOfResidence())
-                .userID(createdUser.getTid())
+                .userEntity(createdUser)
                 .build();
 
         log.info("We are about to save employee details {}",new Gson().toJson(employee));
         var savedEmployee = employeeDBUtilService.saveEmployeeDetails(employee);
         log.info("employee details saved Successfully");
         return responseService.buildSuccessApiResponseDto(List.of(savedEmployee),1);
+    }
+
+    /**
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public BaseApiResponse fetchEmployeeDetails() throws Exception {
+        var employees =  employeeDBUtilService.getActiveEmployees();
+        log.info("Fetched employees {}",employees);
+        var empDetails = employees.stream()
+                .map(EmployeeMapper::mapTODto)
+                .toList();
+        return responseService.buildSuccessApiResponseDto(List.of(empDetails),employees.size());
+
     }
 
 

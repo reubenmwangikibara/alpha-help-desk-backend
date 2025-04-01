@@ -18,10 +18,11 @@ public class GeneralApiListResponse extends  BaseApiResponse {
     }
 
     public GeneralApiListResponse( Integer status, String message,List<?> data, Long total) {
-        this.data = data;
         this.total = total;
         this.status = status;
         this.message = message;
+        this.data = data;
+
     }
 
     public GeneralApiListResponse(List<?> data, Long total, Integer status, String message, List<FieldErrorDto> errors) {

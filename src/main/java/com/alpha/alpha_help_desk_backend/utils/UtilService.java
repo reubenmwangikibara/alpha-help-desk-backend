@@ -26,7 +26,7 @@ public class UtilService {
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException("Decimal places must be non-negative");
 
-        return new BigDecimal(value)
+        return BigDecimal.valueOf(value)
                 .setScale(places, RoundingMode.HALF_UP)
                 .doubleValue();
     }
@@ -37,7 +37,7 @@ public class UtilService {
         return (date!= null) ? LocalDate.parse((CharSequence) date, formatter) : null;
     }
 
-    public SalaryCalc salaryCalculator(double salary,double securityDeposit,double bonus,double trainingAmount ,double forexRate,double deductions)
+    public SalaryCalc empSalaryCalculator(double salary,double securityDeposit,double bonus,double trainingAmount ,double forexRate,double deductions)
     {
         var usdExpectedSalary = usdExpectedSalary(salary,bonus,trainingAmount,securityDeposit);
         var actualSalary = usdExpectedSalary *forexRate;
@@ -47,12 +47,21 @@ public class UtilService {
                 .finalSalary(finalSalary)
                 .actualSalary(actualSalary).build();
     }
-    private static double usdExpectedSalary(double salary,double bonus,double trainingAmount,double securityDeposit)
+
+    public  double usdExpectedSalary(double salary,double bonus,double trainingAmount,double securityDeposit)
     {
         log.info("Salary {} security deposit {} bonus amt {} training amt  {} ",salary,securityDeposit,bonus,trainingAmount);
 
         var usdExpectedSalary = salary - securityDeposit + bonus + trainingAmount;
         log.info("USD EXPECTED SALARY: {}", usdExpectedSalary);
         return usdExpectedSalary;
+    }
+    public SalaryCalc companySalaryCalculator(double salary,double securityDeposit,double bonus,double trainingAmount ,double forexRate)
+    {
+        var usdExpectedSalary = usdExpectedSalary(salary,bonus,trainingAmount,securityDeposit);
+        var actualSalary = usdExpectedSalary * forexRate;
+        return SalaryCalc.builder()
+                .usdExpectedSalary(usdExpectedSalary)
+                .actualSalary(actualSalary).build();
     }
 }

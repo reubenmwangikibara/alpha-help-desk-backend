@@ -4,9 +4,8 @@ import com.alpha.alpha_help_desk_backend.configs.ApplicationConfigs;
 import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.request.EmployeeInvoiceRequestDto;
 import com.alpha.alpha_help_desk_backend.dto.request.InvoicePayment;
-import com.alpha.alpha_help_desk_backend.dto.response.EmployeeInvoiceResponseDTO;
+import com.alpha.alpha_help_desk_backend.mapper.EmployeeInvoiceMapper;
 import com.alpha.alpha_help_desk_backend.entity.EmployeeInvoiceEntity;
-import com.alpha.alpha_help_desk_backend.entity.EmployeeSalary;
 import com.alpha.alpha_help_desk_backend.exceptions.EmployeeNotFoundException;
 import com.alpha.alpha_help_desk_backend.exceptions.InvoiceDetailsExistException;
 import com.alpha.alpha_help_desk_backend.service.EmployeeInvoiceService;
@@ -32,6 +31,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
     private final ResponseService responseService;
     private final ModelMapper modelMapper;
     private final ApplicationConfigs applicationConfigs ;
+    private final UtilService utilService;
 
     /**
      * @param employeeInvoiceRequestDto
@@ -51,8 +51,8 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         var empDetails = employeeDetails.get();
         //adding employee invoice details
         var employeeSalary = employeeInvoiceRequestDto.getHoursWorked() * employeeInvoiceRequestDto.getEmployeeRate();
-        var CompanySalary = employeeInvoiceRequestDto.getHoursWorked() * employeeInvoiceRequestDto.getCompanyRate();
-
+        var companySalary = employeeInvoiceRequestDto.getHoursWorked() * employeeInvoiceRequestDto.getCompanyRate();
+        log.info("=====Hours Worked {} Company Rate {} COMPANY GROSS SALARY ======= {}",employeeInvoiceRequestDto.getHoursWorked(),employeeInvoiceRequestDto.getCompanyRate(), companySalary);
         //check if the employee record for the same week and month exists
         var invoiceExist = employeeDBUtilService.getEmployeeByEmployInvoiceDetails(employeeInvoiceRequestDto.getEmployeeId(),employeeInvoiceRequestDto.getWeekNo(),employeeInvoiceRequestDto.getMonth());
         if(!invoiceExist.isEmpty())
@@ -60,7 +60,13 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
             throw new InvoiceDetailsExistException("Invoice already exists");
         }
 
-        var salaryDetails = new UtilService().salaryCalculator(employeeSalary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt() ,employeeInvoiceRequestDto.getForexRate(),employeeInvoiceRequestDto.getAdvance());
+        var companySalaryDetails= new UtilService().companySalaryCalculator(companySalary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt(),employeeInvoiceRequestDto.getForexRate());
+
+
+        log.info("Company Gross USD Amount {} , KSH AMount {}", companySalaryDetails.getUsdExpectedSalary(),companySalaryDetails.getActualSalary());
+
+
+        var salaryDetails = new UtilService().empSalaryCalculator(employeeSalary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt() ,employeeInvoiceRequestDto.getForexRate(),employeeInvoiceRequestDto.getAdvance());
 
         log.info("Expected Salary {} ,Actual Salary {} final Salary {}",salaryDetails.getUsdExpectedSalary(), salaryDetails.getActualSalary(),salaryDetails.getFinalSalary());
 
@@ -84,17 +90,18 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
                 .month(employeeInvoiceRequestDto.getMonth())
                 .usdExpectedSalary(UtilService.round(salaryDetails.getUsdExpectedSalary(),2))
                 .status(applicationConfigs.getActiveStatus())
+                .companyGrossSalaryUsd(UtilService.round(companySalaryDetails.getUsdExpectedSalary(),2))
+                .companyGrossSalary(UtilService.round(companySalaryDetails.getActualSalary(),2))
                 .build();
 
 
         var savedInvoice = employeeDBUtilService.saveEmployeeInvoiceDetails(invoiceDetails);
 
         var finalInvoiceDetails = Optional.ofNullable(savedInvoice)
-                .map(EmployeeInvoiceResponseDTO::new)
+                .map(EmployeeInvoiceMapper::new)
                 .orElse(null);  // Handle potential null values
 
         assert finalInvoiceDetails != null;
-
         return responseService.buildSuccessApiResponseDto(List.of(finalInvoiceDetails),1);
 
     }
@@ -116,7 +123,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         var invoices = employeeDBUtilService.fetchInvoices(invoiceID,employeeID,status,finalMonth,finalFromDate,finalToDate);
         log.info("Fetched employee invoices {}",invoices);
 
-        var finalInvoiceDetails = invoices.stream().map(EmployeeInvoiceResponseDTO::new).toList();
+        var finalInvoiceDetails = invoices.stream().map(EmployeeInvoiceMapper::new).toList();
 
         return responseService.buildSuccessApiResponseDto(finalInvoiceDetails, finalInvoiceDetails.size());
     }
@@ -144,7 +151,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         var updatedRecord = employeeDBUtilService.saveEmployeeInvoiceDetails(existingInvoice);
         log.info("Updated Employee Invoice {}",updatedRecord);
         var finalInvoiceDetails = Optional.ofNullable(updatedRecord)
-                .map(EmployeeInvoiceResponseDTO::new)
+                .map(EmployeeInvoiceMapper::new)
                 .orElse(null);
 
         assert finalInvoiceDetails != null;
@@ -167,7 +174,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         invoiceDetails.setStatus(0);
         var savedInvoice = employeeDBUtilService.saveEmployeeInvoiceDetails(invoiceDetails);
         var finalInvoiceDetails = Optional.ofNullable(savedInvoice)
-                .map(EmployeeInvoiceResponseDTO::new)
+                .map(EmployeeInvoiceMapper::new)
                 .orElse(null);
         assert finalInvoiceDetails != null;
         return responseService.buildSuccessApiResponseDto(List.of(finalInvoiceDetails),1);

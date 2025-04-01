@@ -18,8 +18,6 @@ public class EmployeeEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for auto-increment
     @Column(name = "tid", nullable = false)
     private long tid;
-    @Column(name="user_id")
-    private long userID;
     @Column(name="employee_number")
     private long employeeNumber;
     @Column(name="status")
@@ -28,6 +26,8 @@ public class EmployeeEntity implements Serializable {
     private String areaOfResidence;
     @Column(name="national_id")
     private long nationalID;
-
+    @ManyToOne(fetch = FetchType.LAZY) // Use LAZY to optimize queries
+    @JoinColumn(name = "user_id", nullable = false) // Foreign key
+    private UserEntity userEntity;
 
 }

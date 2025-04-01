@@ -1,12 +1,10 @@
-package com.alpha.alpha_help_desk_backend.dto.response;
+package com.alpha.alpha_help_desk_backend.mapper;
 
 import com.alpha.alpha_help_desk_backend.entity.EmployeeInvoiceEntity;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Data
-public class EmployeeInvoiceResponseDTO {
+public class EmployeeInvoiceMapper {
     private long tid;
     private double employeeRate;
     private double securityDeposit;
@@ -25,9 +23,11 @@ public class EmployeeInvoiceResponseDTO {
     private Double expectedSalary;
     private Integer actualSalary;
     private Integer status;
+    private Double companyGrossSalaryUsd;
+    private Double companyGrossSalary;
     private String employeeID; // Only include necessary employee fields
 
-    public EmployeeInvoiceResponseDTO(EmployeeInvoiceEntity invoice) {
+    public EmployeeInvoiceMapper(EmployeeInvoiceEntity invoice) {
         this.tid = invoice.getTid();
         this.employeeRate = invoice.getEmployeeRate();
         this.securityDeposit = invoice.getSecurityDeposit();
@@ -46,6 +46,8 @@ public class EmployeeInvoiceResponseDTO {
         this.expectedSalary = invoice.getExpectedSalary();
         this.actualSalary = invoice.getActualSalary();
         this.status = invoice.getStatus();
+        this.companyGrossSalaryUsd = invoice.getCompanyGrossSalaryUsd();
+        this.companyGrossSalary = invoice.getCompanyGrossSalary();
 
         // Prevent Lazy Loading issues
         if (invoice.getEmployeeEntity() != null) {
