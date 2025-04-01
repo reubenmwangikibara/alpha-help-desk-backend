@@ -4,6 +4,7 @@ import com.alpha.alpha_help_desk_backend.dto.request.LoginDTO;
 import com.alpha.alpha_help_desk_backend.dto.request.UserDTO;
 import com.alpha.alpha_help_desk_backend.dto.response.AuthResponseDto;
 import com.alpha.alpha_help_desk_backend.entity.UserEntity;
+import com.alpha.alpha_help_desk_backend.exceptions.InvalidTokenException;
 import com.alpha.alpha_help_desk_backend.exceptions.UserExistException;
 import com.alpha.alpha_help_desk_backend.security.JwtUtil;
 import com.alpha.alpha_help_desk_backend.service.UserService;
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         log.info("User Login Failed : User Not Found");
-        throw new AuthenticationException("Wrong Username / password");
+        throw new InvalidTokenException("Wrong Username / password");
 
     }
 

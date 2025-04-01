@@ -20,9 +20,11 @@ public class EmployeeController {
 
         return employeeService.addEmployeeDetails(employeeDTO);
     }
+
     @PostMapping("/fetch")
     public BaseApiResponse fetchEmployeeDetails () throws Exception {
 
         return employeeService.fetchEmployeeDetails();
     }
+
 }

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,7 +74,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             sendErrorResponse(response, "JWT claims string is empty.", HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
             log.error(e.getMessage());
-            sendErrorResponse(response, "An error Occurred While Processing Your Request", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            sendErrorResponse(response, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

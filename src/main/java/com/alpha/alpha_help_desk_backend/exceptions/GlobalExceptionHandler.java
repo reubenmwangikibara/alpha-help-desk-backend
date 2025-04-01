@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,8 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.server.MethodNotAllowedException;
-
+import javax.naming.AuthenticationException;
 import java.util.*;
 
 @RestControllerAdvice
@@ -112,6 +113,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvoiceDetailsExistException.class)
     public BaseApiResponse handleInvoiceExistException(InvoiceDetailsExistException e){
+        String error = e.getMessage();
+        log.info(error);
+        return new BaseApiResponse(400,error,null,null);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public BaseApiResponse handleAuthenticationException(InvalidTokenException e) {
+        String error = e.getMessage();
+        log.info(error);
+        return new BaseApiResponse(400,error,null,null);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public BaseApiResponse handleAuthenticationException(UsernameNotFoundException e) {
         String error = e.getMessage();
         log.info(error);
         return new BaseApiResponse(400,error,null,null);

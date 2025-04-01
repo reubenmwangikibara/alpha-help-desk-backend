@@ -26,6 +26,10 @@ public class EmployeeInvoiceMapper {
     private Double companyGrossSalaryUsd;
     private Double companyGrossSalary;
     private String employeeID; // Only include necessary employee fields
+    private String employeeName;
+    private String employeeNumber;
+    private String phoneNumber;
+    private String nationalID;
 
     public EmployeeInvoiceMapper(EmployeeInvoiceEntity invoice) {
         this.tid = invoice.getTid();
@@ -48,10 +52,18 @@ public class EmployeeInvoiceMapper {
         this.status = invoice.getStatus();
         this.companyGrossSalaryUsd = invoice.getCompanyGrossSalaryUsd();
         this.companyGrossSalary = invoice.getCompanyGrossSalary();
+        this.employeeName = invoice.getEmployeeEntity().getUserEntity() != null ?
+                            invoice.getEmployeeEntity().getUserEntity().getFirstName() + " "
+                        +   invoice.getEmployeeEntity().getUserEntity().getLastName()
+                            : null;
+        this.phoneNumber = invoice.getEmployeeEntity().getUserEntity() != null ?
+                invoice.getEmployeeEntity().getUserEntity().getPhoneNumber() : null;
 
         // Prevent Lazy Loading issues
         if (invoice.getEmployeeEntity() != null) {
             this.employeeID = String.valueOf(invoice.getEmployeeEntity().getTid()); // Only include name
+            this.employeeNumber = String.valueOf(invoice.getEmployeeEntity().getEmployeeNumber());
+
         }
     }
 }
