@@ -1,14 +1,11 @@
 package com.alpha.alpha_help_desk_backend.controller;
 
 import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
-import com.alpha.alpha_help_desk_backend.dto.request.EmployeeDTO;
-import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
+import com.alpha.alpha_help_desk_backend.dto.request.EmployeeRequestDTO;
 import com.alpha.alpha_help_desk_backend.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path= "api/v1/employee")
@@ -16,15 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
     private final EmployeeService employeeService;
     @PostMapping("/add")
-    public BaseApiResponse addEmployeeDetails (@RequestBody EmployeeDTO employeeDTO) throws Exception{
+    public BaseApiResponse addEmployeeDetails (@Valid @RequestBody EmployeeRequestDTO employeeRequestDTO) throws Exception{
 
-        return employeeService.addEmployeeDetails(employeeDTO);
+        return employeeService.addEmployeeDetails(employeeRequestDTO);
     }
 
     @PostMapping("/fetch")
     public BaseApiResponse fetchEmployeeDetails () throws Exception {
 
         return employeeService.fetchEmployeeDetails();
+    }
+
+    @PostMapping("/update/{tid}")
+    public BaseApiResponse updateEmployeeDetails (@PathVariable Long tid,@Valid @RequestBody EmployeeRequestDTO employeeRequestDTO) throws Exception {
+
+        return employeeService.updateEmployeeDetails(tid, employeeRequestDTO);
     }
 
 }

@@ -23,7 +23,7 @@ public class EmployeeDBUtilService {
 
     public Optional<EmployeeEntity> getEmployeeByEmployeeEmployeeID(Long employeeID) {
 
-        return employeeRepository.findEmployeeEntitiesByTid(employeeID);
+        return employeeRepository.findEmployeeEntitiesByTidAndStatus(employeeID,1);
 
     }
     public List<EmployeeEntity> getActiveEmployees() {

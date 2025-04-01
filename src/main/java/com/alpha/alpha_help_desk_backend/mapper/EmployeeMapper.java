@@ -19,7 +19,7 @@ public class EmployeeMapper {
                 .employeeNumber(employee.getEmployeeNumber())
                 .status(employee.getStatus()==1? "ACTIVE":"DEACTIVATED")
                 .areaOfResidence(employee.getAreaOfResidence())
-                .nationalID(employee.getNationalID())
+                .nationalID(employee.getNationalId())
                 .userId(user != null ? user.getTid() : null) // Avoid lazy-loading issue
                 .employeeName(user != null ? user.getFirstName() +" "+user.getLastName() : null)
                 .employeeNumber(employee.getEmployeeNumber())

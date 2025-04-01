@@ -11,13 +11,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmployeeDTO implements Serializable {
-    private long tid;
+public class EmployeeRequestDTO implements Serializable {
     private String firstName;
     private String lastName;
     private String areaOfResidence;
     private long nationalId;
     private String phoneNumber;
+    private String status;
 
 
 

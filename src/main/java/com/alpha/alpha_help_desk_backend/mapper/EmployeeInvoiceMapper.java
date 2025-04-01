@@ -63,7 +63,7 @@ public class EmployeeInvoiceMapper {
         if (invoice.getEmployeeEntity() != null) {
             this.employeeID = String.valueOf(invoice.getEmployeeEntity().getTid()); // Only include name
             this.employeeNumber = String.valueOf(invoice.getEmployeeEntity().getEmployeeNumber());
-            this.nationalID = String.valueOf(invoice.getEmployeeEntity().getNationalID());
+            this.nationalID = String.valueOf(invoice.getEmployeeEntity().getNationalId());
 
         }
     }
