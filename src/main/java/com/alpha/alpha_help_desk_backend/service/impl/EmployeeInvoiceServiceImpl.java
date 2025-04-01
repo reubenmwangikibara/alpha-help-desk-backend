@@ -40,7 +40,6 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
      */
     @Override
     public BaseApiResponse addEmployeeInvoice(EmployeeInvoiceRequestDto employeeInvoiceRequestDto) throws Exception {
-
         //let's check if the employee exist
         var employeeDetails = employeeDBUtilService.getEmployeeByEmployeeEmployeeID(employeeInvoiceRequestDto.getEmployeeId());
 
@@ -59,12 +58,9 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         {
             throw new InvoiceDetailsExistException("Invoice already exists");
         }
-
         var companySalaryDetails= new UtilService().companySalaryCalculator(companySalary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt(),employeeInvoiceRequestDto.getForexRate());
 
-
         log.info("Company Gross USD Amount {} , KSH AMount {}", companySalaryDetails.getUsdExpectedSalary(),companySalaryDetails.getActualSalary());
-
 
         var salaryDetails = new UtilService().empSalaryCalculator(employeeSalary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt() ,employeeInvoiceRequestDto.getForexRate(),employeeInvoiceRequestDto.getAdvance());
 
@@ -92,6 +88,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
                 .status(applicationConfigs.getActiveStatus())
                 .companyGrossSalaryUsd(UtilService.round(companySalaryDetails.getUsdExpectedSalary(),2))
                 .companyGrossSalary(UtilService.round(companySalaryDetails.getActualSalary(),2))
+                .companyNetSalary(companySalaryDetails.getActualSalary() - salaryDetails.getFinalSalary())
                 .build();
 
 
