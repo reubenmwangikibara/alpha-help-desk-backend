@@ -37,11 +37,12 @@ public class UtilService {
         return (date!= null) ? LocalDate.parse((CharSequence) date, formatter) : null;
     }
 
-    public SalaryCalc empSalaryCalculator(double salary,double securityDeposit,double bonus,double trainingAmount ,double forexRate,double deductions)
+    public SalaryCalc empSalaryCalculator(double salary,double securityDeposit,double bonus,double trainingAmount ,double forexRate,double deductions,double advance)
     {
         var usdExpectedSalary = usdExpectedSalary(salary,bonus,trainingAmount,securityDeposit);
-        var actualSalary = usdExpectedSalary *forexRate;
-        var finalSalary = actualSalary - deductions;
+        var actualSalary = usdExpectedSalary * forexRate;
+        log.info("EMP DEDUCTIONS {} EMP ADVANCE {}", deductions, advance);
+        var finalSalary = actualSalary - deductions - advance;
         return SalaryCalc.builder()
                 .usdExpectedSalary(usdExpectedSalary)
                 .finalSalary(finalSalary)

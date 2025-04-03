@@ -62,7 +62,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
 
         log.info("Company Gross USD Amount {} , KSH AMount {}", companySalaryDetails.getUsdExpectedSalary(),companySalaryDetails.getActualSalary());
 
-        var salaryDetails = new UtilService().empSalaryCalculator(employeeSalary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt() ,employeeInvoiceRequestDto.getForexRate(),employeeInvoiceRequestDto.getAdvance());
+        var salaryDetails = new UtilService().empSalaryCalculator(employeeSalary,employeeInvoiceRequestDto.getSecurityDeposit(),employeeInvoiceRequestDto.getBonusAmt(),employeeInvoiceRequestDto.getTrainingAmt() ,employeeInvoiceRequestDto.getForexRate(),employeeInvoiceRequestDto.getDeductions(),employeeInvoiceRequestDto.getAdvance());
 
         log.info("Expected Salary {} ,Actual Salary {} final Salary {}",salaryDetails.getUsdExpectedSalary(), salaryDetails.getActualSalary(),salaryDetails.getFinalSalary());
 
@@ -80,8 +80,9 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
                 .trainingAmt(employeeInvoiceRequestDto.getTrainingAmt())
                 .securityDeposit(employeeInvoiceRequestDto.getSecurityDeposit())
                 .advance(employeeInvoiceRequestDto.getAdvance())
+                .deductions(employeeInvoiceRequestDto.getDeductions())
                 .expectedSalary(UtilService.round(salaryDetails.getActualSalary(),2))
-                .actualSalary((int) salaryDetails.getActualSalary())
+                .actualSalary((int) salaryDetails.getFinalSalary())
                 .forexRate(employeeInvoiceRequestDto.getForexRate())
                 .month(employeeInvoiceRequestDto.getMonth())
                 .usdExpectedSalary(UtilService.round(salaryDetails.getUsdExpectedSalary(),2))
