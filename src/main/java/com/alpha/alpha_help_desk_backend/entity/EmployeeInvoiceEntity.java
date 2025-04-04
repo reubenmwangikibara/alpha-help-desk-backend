@@ -78,10 +78,8 @@ public class EmployeeInvoiceEntity {
     @Column(name = "actualSalary", nullable = false)
     private Integer actualSalary;
 
-
     @Column(name = "status", nullable = false)
     private Integer status;
-
 
     @Column(name = "company_gross_salary_usd", nullable = false)
     private Double companyGrossSalaryUsd;
