@@ -63,14 +63,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
+            log.info("EXPIRED JWT TOKEN {}", new Gson().toJson(e));
             sendErrorResponse(response, "Token expired. Please log in again.", HttpServletResponse.SC_UNAUTHORIZED);
         } catch (SignatureException e) {
+            log.info("INVALID JWT TOKEN {}", new Gson().toJson(e));
             sendErrorResponse(response, "Invalid JWT signature.", HttpServletResponse.SC_UNAUTHORIZED);
         } catch (MalformedJwtException e) {
+            log.info("Malformed  JWT TOKEN {}", new Gson().toJson(e));
             sendErrorResponse(response, "Malformed JWT token.", HttpServletResponse.SC_BAD_REQUEST);
         } catch (UnsupportedJwtException e) {
+            log.info("UNSUPPORTED JWT TOKEN {}", new Gson().toJson(e));
             sendErrorResponse(response, "Unsupported JWT token.", HttpServletResponse.SC_BAD_REQUEST);
         } catch (IllegalArgumentException e) {
+            log.info("Illegal JWT TOKEN {}", new Gson().toJson(e));
             sendErrorResponse(response, "JWT claims string is empty.", HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
             log.error(e.getMessage());

@@ -1,8 +1,6 @@
 package com.alpha.alpha_help_desk_backend.utils.db;
 
-import com.alpha.alpha_help_desk_backend.entity.EmployeeEntity;
 import com.alpha.alpha_help_desk_backend.entity.ExpenseEntity;
-import com.alpha.alpha_help_desk_backend.repository.EmployeeRepository;
 import com.alpha.alpha_help_desk_backend.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
