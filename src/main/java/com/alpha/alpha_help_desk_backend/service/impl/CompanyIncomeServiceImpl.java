@@ -2,7 +2,9 @@ package com.alpha.alpha_help_desk_backend.service.impl;
 
 import com.alpha.alpha_help_desk_backend.dto.BaseApiResponse;
 import com.alpha.alpha_help_desk_backend.dto.request.CompanyIncomeRequestDto;
+import com.alpha.alpha_help_desk_backend.dto.response.CompanyIncomeResponseDto;
 import com.alpha.alpha_help_desk_backend.entity.WeeklyCompanyIncome;
+import com.alpha.alpha_help_desk_backend.mapper.WeeklyCompanyIncomeMapper;
 import com.alpha.alpha_help_desk_backend.service.CompanyIncomeService;
 import com.alpha.alpha_help_desk_backend.utils.ResponseService;
 import com.alpha.alpha_help_desk_backend.utils.db.IncomeDBUtilService;
@@ -51,5 +53,17 @@ public class CompanyIncomeServiceImpl implements CompanyIncomeService {
         var savedIncomeDetails = incomeDBUtilService.saveWeeklyIncome(entity);
 
         return responseService.buildSuccessApiResponseDto(List.of(savedIncomeDetails),1);
+    }
+
+    /**
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public BaseApiResponse fetchCompanyIncome(String dateFrom,String dateTo) throws Exception {
+        var incomeDetails = incomeDBUtilService.fetchCompanyIncome(null,null);
+        List<CompanyIncomeResponseDto> dtoList = WeeklyCompanyIncomeMapper.toList(incomeDetails);
+        return responseService.buildSuccessApiResponseDto(List.of(dtoList),incomeDetails.size());
+
     }
 }

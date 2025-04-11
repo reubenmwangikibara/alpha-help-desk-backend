@@ -22,4 +22,9 @@ public class CompanyIncomeController {
 
         return companyIncomeService.addCompanyIncome(companyIncomeRequestDto);
     }
+    @PostMapping("/fetch")
+    public BaseApiResponse fetchIncomeDetails () throws Exception {
+
+        return companyIncomeService.fetchCompanyIncome(null, null);
+    }
 }

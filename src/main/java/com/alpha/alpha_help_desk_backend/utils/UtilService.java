@@ -65,4 +65,5 @@ public class UtilService {
                 .usdExpectedSalary(usdExpectedSalary)
                 .actualSalary(actualSalary).build();
     }
+
 }
