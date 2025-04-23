@@ -52,6 +52,7 @@ public class JwtUtil {
                 .token(token)
                 .duration(String.valueOf(applicationConfigs.getExpiryDuration()))
                 .expiresAt(formattedExpiry)
+                .userName(username)
                 .build();
         log.info("generated token: {}", token);
         var uname = extractUsername(token);

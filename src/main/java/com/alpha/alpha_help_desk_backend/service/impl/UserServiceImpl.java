@@ -62,15 +62,16 @@ public class UserServiceImpl implements UserService {
             UserEntity user = userEntity.get();
             if (passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
                 var authResponseDto = jwtUtil.generateToken(loginDTO.getUserName()); // Generate JWT
+
                 log.info("User logged in successfully");
                 return authResponseDto;
             }
             else {
-                throw new AuthenticationException("Wrong Username / password");
+                throw new AuthenticationException("Incorrect Username / password");
             }
         }
         log.info("User Login Failed : User Not Found");
-        throw new InvalidTokenException("Wrong Username / password");
+        throw new InvalidTokenException("Invalid Username / password");
 
     }
 

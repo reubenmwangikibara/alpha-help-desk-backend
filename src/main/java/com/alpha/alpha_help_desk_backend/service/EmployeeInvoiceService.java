@@ -15,6 +15,5 @@ public interface EmployeeInvoiceService {
 
     BaseApiResponse deactivateInvoice (Long invoiceID) throws Exception;
 
-    BaseApiResponse invoicePayment (InvoicePayment invoicePayment) throws Exception;
 
 }

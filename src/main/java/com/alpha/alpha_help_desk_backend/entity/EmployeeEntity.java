@@ -26,7 +26,7 @@ public class EmployeeEntity implements Serializable {
     private String areaOfResidence;
     @Column(name="national_id")
     private long nationalId;
-    @ManyToOne(fetch = FetchType.LAZY) // Use LAZY to optimize queries
+    @OneToOne(fetch = FetchType.LAZY) // Use LAZY to optimize queries
     @JoinColumn(name = "user_id", nullable = false) // Foreign key
     private UserEntity userEntity;
 

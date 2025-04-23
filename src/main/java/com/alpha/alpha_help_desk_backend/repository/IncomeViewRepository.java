@@ -15,5 +15,9 @@ public interface IncomeViewRepository extends JpaRepository<CompanyIncomeView,Lo
     Optional<CompanyIncomeView> findIncomeByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 
+    @Query("SELECT c FROM CompanyIncomeView c")
+    List<CompanyIncomeView> findInvoiceDetails(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+
 
 }

@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository <EmployeeEntity,Long> {
 
-    Optional<EmployeeEntity> findEmployeeEntitiesByTidAndStatus (Long employeeID,int status);
+    Optional<EmployeeEntity> findEmployeeEntitiesByTid (Long employeeID);
 
-    @Query("SELECT e FROM EmployeeEntity e WHERE  e.status=1 order by e.tid desc ")
+    @Query("SELECT e FROM EmployeeEntity e WHERE  e.status=1 or e.status =0 order by e.status desc ")
     List<EmployeeEntity> findAllEmployees ();
 
 }

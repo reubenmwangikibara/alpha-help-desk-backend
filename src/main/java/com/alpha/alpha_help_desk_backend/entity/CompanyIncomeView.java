@@ -30,6 +30,9 @@ public class CompanyIncomeView {
     @Column(name = "employee_salary_ksh", nullable = false)
     private Double employeeSalaryKsh;
 
+    @Column(name = "expected_income", nullable = false)
+    private Double expectedIncome;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "date_from", nullable = false)
     private LocalDate dateFrom;

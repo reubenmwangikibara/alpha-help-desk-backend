@@ -18,13 +18,13 @@ public class EmployeeController {
         return employeeService.addEmployeeDetails(employeeRequestDTO);
     }
 
-    @PostMapping("/fetch")
+    @GetMapping("/fetch")
     public BaseApiResponse fetchEmployeeDetails () throws Exception {
 
         return employeeService.fetchEmployeeDetails();
     }
 
-    @PostMapping("/update/{tid}")
+    @PutMapping("/update/{tid}")
     public BaseApiResponse updateEmployeeDetails (@PathVariable Long tid,@Valid @RequestBody EmployeeRequestDTO employeeRequestDTO) throws Exception {
 
         return employeeService.updateEmployeeDetails(tid, employeeRequestDTO);

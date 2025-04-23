@@ -38,14 +38,10 @@ public class EmployeeInvoiceController {
 
         return employeeInvoiceService.updateEmployeeInvoice(tid,employeeInvoiceRequestDto);
     }
-    @PutMapping("deactivate/{tid}")
+    @PostMapping("deactivate/{tid}")
     public BaseApiResponse deactivateInvoice (@PathVariable Long tid)throws Exception {
 
         return employeeInvoiceService.deactivateInvoice(tid);
     }
-    @PostMapping("payment")
-    public BaseApiResponse invoicePayment (@RequestBody @Valid InvoicePayment invoicePayment)throws Exception {
 
-        return employeeInvoiceService.invoicePayment(invoicePayment);
-    }
 }

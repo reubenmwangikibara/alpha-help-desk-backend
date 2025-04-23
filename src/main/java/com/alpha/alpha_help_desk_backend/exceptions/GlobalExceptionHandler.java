@@ -118,6 +118,7 @@ public class GlobalExceptionHandler {
         return new BaseApiResponse(400,error,null,null);
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED )
     @ExceptionHandler(InvalidTokenException.class)
     public BaseApiResponse handleAuthenticationException(InvalidTokenException e) {
         String error = e.getMessage();

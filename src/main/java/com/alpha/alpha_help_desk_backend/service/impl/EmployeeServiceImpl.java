@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         var employeeDetails = employeeDBUtilService.getEmployeeByEmployeeEmployeeID(tid);
         if(employeeDetails.isEmpty())
         {
-            throw new Exception("Employee details not found");
+            throw new Exception("Employee details not found"+tid);
         }
         var employee = employeeDetails.get();
         employee.setStatus(Integer.valueOf(employeeRequestDTO.getStatus()));

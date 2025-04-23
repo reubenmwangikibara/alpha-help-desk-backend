@@ -27,13 +27,13 @@ public class IncomeDBUtilService {
         }
         return incomeByDateRange.get();
     }
-    public CompanyIncomeView findWeeklyIncomeByDate(LocalDate dateFrom, LocalDate dateTo) throws Exception {
+    public List<CompanyIncomeView> fetchInvoiceDetails(LocalDate dateFrom, LocalDate dateTo) throws Exception {
 
-        var incomeByDateRange =  incomeViewRepository.findIncomeByDateRange(dateFrom ,dateTo);
+        var incomeByDateRange =  incomeViewRepository.findInvoiceDetails(dateFrom ,dateTo);
         if (incomeByDateRange.isEmpty()) {
             throw new Exception("No Record Found For the provided date Range : Date From  " +dateFrom +" Date TO "+dateTo);
         }
-        return incomeByDateRange.get();
+        return incomeByDateRange;
     }
     public List<WeeklyCompanyIncome> fetchCompanyIncome(LocalDate dateFrom, LocalDate dateTo) throws Exception {
 

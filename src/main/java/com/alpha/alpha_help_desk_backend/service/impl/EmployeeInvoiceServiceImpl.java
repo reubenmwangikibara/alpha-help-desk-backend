@@ -178,26 +178,5 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         return responseService.buildSuccessApiResponseDto(List.of(finalInvoiceDetails),1);
     }
 
-    /**
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public BaseApiResponse invoicePayment(InvoicePayment invoicePayment) throws Exception {
-        var invoice = employeeDBUtilService.fetchInvoiceByIDAndActiveStatus(invoicePayment.getInvoiceID(),applicationConfigs.getActiveStatus());
-        if(invoice.isEmpty()) {
-            throw new Exception("Employee invoice with id " + invoicePayment.getInvoiceID() + " does not exist");
-        }
-        var invoiceDetails = invoice.get();
-        log.info("Invoice Payment {}",invoiceDetails);
-        var expectedSalary = invoiceDetails.getExpectedSalary();
-//        var salaryDetails = new UtilService().salaryCalculator(expectedSalary,invoiceDetails.getForexRate(),0);
-//        var employeeSalary  = new EmployeeSalary();
-//        employeeSalary.setDeductions(0);
-//        employeeSalary.setAmount(salaryDetails.getFinalSalary());
-//        employeeSalary.setActualAmount(salaryDetails.getFinalSalary());
-//        employeeSalary.setInvoiceID(invoiceDetails.getTid());
 
-        return null;
-    }
 }
