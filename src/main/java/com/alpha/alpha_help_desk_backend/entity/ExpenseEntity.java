@@ -36,12 +36,11 @@ public class ExpenseEntity implements Serializable {
     @Column(name = "no_of_days", nullable = false)
     private Long noOfDays;
 
-
     @Column(name = "total_amount", nullable = false)
     private Long totalAmount;
 
     @Column(name = "week_no", nullable = false)
-    private Long weekNo;
+    private int weekNo;
 
     @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;

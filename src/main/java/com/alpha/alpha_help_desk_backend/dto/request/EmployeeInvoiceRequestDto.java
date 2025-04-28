@@ -37,7 +37,6 @@ public class EmployeeInvoiceRequestDto implements Serializable {
     @NotNull(message = "deductions.required")
     private  double deductions;
 
-    @NotNull(message = "weekNo.required")
     private  Integer weekNo;
 
     @NotBlank(message = "dateFrom date is required")
@@ -55,11 +54,7 @@ public class EmployeeInvoiceRequestDto implements Serializable {
     @NotNull(message = "advance.required")
     private Double advance;
 
-    @NotNull(message = "month.required")
     private String month;
-
-    @NotNull(message = "deductBonus.required")
-    private Boolean deductBonus ;
 
 
 }

@@ -8,7 +8,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
+
 @Component
 @Slf4j
 public class UtilService {
@@ -64,6 +67,23 @@ public class UtilService {
         return SalaryCalc.builder()
                 .usdExpectedSalary(usdExpectedSalary)
                 .actualSalary(actualSalary).build();
+    }
+    public int weekNumberCalc()
+    {
+        LocalDate today = LocalDate.now();
+
+        // Use ISO Week Fields (week starts on Monday)
+        int weekNumber = today.get(WeekFields.ISO.weekOfWeekBasedYear());
+
+        System.out.println("Current week number: " + weekNumber);
+        return weekNumber;
+    }
+    public String getCurrentMonth() {
+        LocalDate today = LocalDate.now();
+        Month monthEnum = today.getMonth(); // Enum like APRIL
+        int monthNumber = today.getMonthValue(); // 1-12
+
+        return monthEnum.toString();
     }
 
 }

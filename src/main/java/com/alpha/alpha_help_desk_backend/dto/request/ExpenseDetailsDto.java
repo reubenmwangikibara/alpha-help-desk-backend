@@ -27,9 +27,7 @@ public class ExpenseDetailsDto implements Serializable {
     @NotNull(message = "noOfDays  is required")
     private Long noOfDays;
 
-    @NotNull(message = "weekNo  is required")
-    private Long weekNo;
-
+    private String expenseDate;
 
     private String dueDate;
 

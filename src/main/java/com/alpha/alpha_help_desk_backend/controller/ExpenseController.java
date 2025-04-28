@@ -19,7 +19,7 @@ public class ExpenseController {
         return expenseService.saveExpenseDetails(expenseDetailsDto);
     }
 
-    @PostMapping("/fetch")
+    @GetMapping("/fetch")
     public BaseApiResponse fetchExpense () throws Exception {
         return expenseService.fetchExpense();
     }
@@ -30,7 +30,7 @@ public class ExpenseController {
         return expenseService.updateExpense(tid,expenseDetailsDto);
     }
 
-    @PostMapping("/delete/{tid}")
+    @DeleteMapping("/delete/{tid}")
     public BaseApiResponse deleteExpense (@PathVariable Long tid) throws Exception {
 
         return expenseService.deleteExpense(tid);

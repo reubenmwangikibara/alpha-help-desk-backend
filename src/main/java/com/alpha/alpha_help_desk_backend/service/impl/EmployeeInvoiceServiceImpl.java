@@ -69,7 +69,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
         var invoiceDetails = EmployeeInvoiceEntity
                 .builder()
                 .employeeEntity(empDetails)
-                .weekNo(Math.toIntExact(employeeInvoiceRequestDto.getWeekNo()))
+                .weekNo(utilService.weekNumberCalc())
                 .dateFrom(UtilService.formatDate(employeeInvoiceRequestDto.getDateFrom()))
                 .dateTo(UtilService.formatDate(employeeInvoiceRequestDto.getDateTo()))
                 .hoursWorked(employeeInvoiceRequestDto.getHoursWorked())
@@ -84,7 +84,7 @@ public class EmployeeInvoiceServiceImpl implements EmployeeInvoiceService {
                 .expectedSalary(UtilService.round(salaryDetails.getActualSalary(),2))
                 .actualSalary((int) salaryDetails.getFinalSalary())
                 .forexRate(employeeInvoiceRequestDto.getForexRate())
-                .month(employeeInvoiceRequestDto.getMonth())
+                .month(utilService.getCurrentMonth())
                 .usdExpectedSalary(UtilService.round(salaryDetails.getUsdExpectedSalary(),2))
                 .status(applicationConfigs.getActiveStatus())
                 .companyGrossSalaryUsd(UtilService.round(companySalaryDetails.getUsdExpectedSalary(),2))

@@ -5,6 +5,7 @@ import com.alpha.alpha_help_desk_backend.dto.request.ExpenseDetailsDto;
 import com.alpha.alpha_help_desk_backend.entity.ExpenseEntity;
 import com.alpha.alpha_help_desk_backend.service.ExpenseService;
 import com.alpha.alpha_help_desk_backend.utils.ResponseService;
+import com.alpha.alpha_help_desk_backend.utils.UtilService;
 import com.alpha.alpha_help_desk_backend.utils.db.ExpensesDBUtilService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,21 +21,19 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpensesDBUtilService expensesDBUtilService;
     private final ModelMapper modelMapper;
     private final ResponseService responseService;
+    private final UtilService utilService;
 
     /**
      * @return
      */
     @Override
     public BaseApiResponse saveExpenseDetails(ExpenseDetailsDto expenseDetailsDto) throws Exception {
-        var expenseDetails = expensesDBUtilService.checkIfExists(expenseDetailsDto.getWeekNo(),expenseDetailsDto.getName());
-        if(expenseDetails.isPresent())
-        {
-            throw new Exception("Expense Details Already Exists");
-        }
+
         var entity = new ExpenseEntity();
         modelMapper.map(expenseDetailsDto, entity);
         var totalAmount = expenseDetailsDto.getPrice() * expenseDetailsDto.getQuantity() * expenseDetailsDto.getNoOfDays();
         entity.setTotalAmount(totalAmount);
+        entity.setWeekNo(utilService.weekNumberCalc());
         entity.setActiveStatus(1);
         log.info("Saving expense details : {}", entity);
         var savedRecord = expensesDBUtilService.saveExpenseDetails(entity);
