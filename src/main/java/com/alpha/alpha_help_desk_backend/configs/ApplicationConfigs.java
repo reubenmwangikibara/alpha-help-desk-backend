@@ -17,4 +17,5 @@ public class ApplicationConfigs {
     int activeStatus;
     int deletedStatus;
     int paidStatus;
+
 }
