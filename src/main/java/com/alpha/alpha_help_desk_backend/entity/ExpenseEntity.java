@@ -21,7 +21,6 @@ public class ExpenseEntity implements Serializable {
     @Column(name = "tid", nullable = false)
     private long tid;
 
-
     @Column(name = "name", nullable = false)
     private String name;
 
